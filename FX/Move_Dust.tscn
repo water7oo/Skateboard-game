@@ -33,7 +33,6 @@ scale_curve = SubResource("CurveTexture_6t3s6")
 [node name="move_dust" type="GPUParticles3D" parent="."]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0.0624622, 0)
 material_override = SubResource("StandardMaterial3D_aoycw")
-emitting = false
 amount = 2
 randomness = 1.0
 fixed_fps = 60

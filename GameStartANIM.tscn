@@ -106,7 +106,7 @@ position = Vector2(512, 312)
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="Letterbox controller"]
 material = SubResource("CanvasItemMaterial_nhbyx")
-position = Vector2(44.5005, -136)
+position = Vector2(44.5005, -448)
 rotation = -0.0118908
 scale = Vector2(1255.75, 391.565)
 mesh = SubResource("QuadMesh_bp5hn")
@@ -114,7 +114,7 @@ texture = ExtResource("1_7hqct")
 
 [node name="MeshInstance2D2" type="MeshInstance2D" parent="Letterbox controller"]
 material = SubResource("CanvasItemMaterial_nhbyx")
-position = Vector2(44.5005, 208)
+position = Vector2(44.5005, 456)
 rotation = 3.12159
 scale = Vector2(1257, 346)
 mesh = SubResource("QuadMesh_bp5hn")

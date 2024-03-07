@@ -1,10 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1yu2x7osdqa5"]
+[gd_scene load_steps=8 format=3 uid="uid://d1yu2x7osdqa5"]
+
+[ext_resource type="Shader" path="res://Shaders/OUTLINE_NEW.gdshader" id="1_gegok"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ipbtd"]
+render_priority = 0
+shader = ExtResource("1_gegok")
+shader_parameter/border_width = 0.172
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/pattern = null
+shader_parameter/line_number = null
+shader_parameter/line_sharpness = null
+shader_parameter/pulse = null
+shader_parameter/pulse_speed = null
+shader_parameter/line_movement = null
+shader_parameter/line_movement_speed = null
+shader_parameter/wave = null
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wvicg"]
 next_pass = SubResource("ShaderMaterial_ipbtd")
-transparency = 1
 blend_mode = 1
 shading_mode = 0
 diffuse_mode = 3
@@ -26,11 +39,11 @@ curve = SubResource("Curve_2pfd2")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_q746a"]
 spread = 180.0
-flatness = 0.52
+flatness = 1.0
 gravity = Vector3(0, 0, 0)
-initial_velocity_max = 15.0
+initial_velocity_max = 10.0
 angular_velocity_max = 20.0
-damping_min = 29.032
+radial_accel_max = 100.0
 damping_max = 100.0
 scale_min = 0.0
 scale_max = 0.2
@@ -44,8 +57,8 @@ scale_curve = SubResource("CurveTexture_ym3tt")
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_wvicg")
 emitting = false
-amount = 20
-lifetime = 0.3
+amount = 30
+lifetime = 0.1
 speed_scale = 0.7
 explosiveness = 1.0
 randomness = 1.0

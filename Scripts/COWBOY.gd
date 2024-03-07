@@ -93,7 +93,7 @@ var LERP_VAL = 0.2
 var DODGE_LERP_VAL = 1
 var wall_jump_position = Vector3.ZERO
 
-var custom_gravity = 30.0 #The lower the value the floatier
+var custom_gravity = 25.0 #The lower the value the floatier
 var sprinting = false
 var dodging = false
 var dodge_timer = 0.0
@@ -113,7 +113,12 @@ var fall = Vector3()
 var wall_normal
 var direction = Vector3()
 
+#Attacking
 
+var attacklight_1 = Input.is_action_just_pressed("attack_light_1")
+var attacklight1_timer = 0.0
+var attack_cooldown = 0.0
+var attacklight2_timer = 0.0
 # Hitbox variables
 var hitbox = null
 var hitbox_active = false
@@ -336,8 +341,6 @@ func _proccess_jump(delta):
 	elif is_on_floor():
 		can_jump = true
 		$AnimationTree.set("parameters/Jump_Blend/blend_amount", -1)
-		
-#		jump_use = 1
 
 
 	if velocity.y > 0 && jump_timer >= 0.01:
@@ -377,7 +380,6 @@ func _proccess_jump(delta):
 		air_timer = 0.0
 		jump_timer = 0.0
 		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
-		
 
 func _process_walljump(delta):
 	if is_on_wall():
@@ -398,6 +400,26 @@ func _process_walljump(delta):
 								node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
 
 
+func _proccess_attack(delta):
+	if is_attacking:
+		attack_cooldown -= delta
+	if attack_cooldown <= 0.0:
+		is_attacking = false
+	if Input.is_action_pressed("attack_light_1") && is_on_floor() && attack_cooldown <= 0.0:
+		$AnimationTree.set("parameters/Attack_Shot/request", 1)
+		is_attacking = true
+		attack_cooldown = 0.2 # Set the cooldown time (0.5 seconds in this case)
+	if Input.is_action_just_released("attack_light_1") && is_on_floor():
+		attacklight1_timer = 0.0
+		attacklight2_timer += delta
+		print(attacklight2_timer)
+		$AnimationTree.set("parameters/Attack_Shot/request", 2)
+	if Input.is_action_just_pressed("attack_light_1") && attacklight2_timer >= 0 && is_on_floor():
+		attacklight1_timer = 0.0
+		attacklight2_timer = 0.0
+		print("SECOND LIGHT ATTACK")
+#		$AnimationTree.set("parameters/Attack_Shot2/request", 2)
+
 
 func _physics_process(delta):
 	_proccess_movement(delta)
@@ -406,6 +428,8 @@ func _physics_process(delta):
 	_proccess_dodge(delta)
 	_proccess_cooldown(delta)
 	_proccess_sprinting(delta)
+	
+	_proccess_attack(delta)
 
 	if Input.is_action_just_pressed("mouse_left"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

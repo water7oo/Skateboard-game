@@ -23,7 +23,7 @@ turbulence_noise_scale = 4.81
 anim_speed_min = 1.53
 anim_speed_max = 4.46
 
-[sub_resource type="QuadMesh" id="QuadMesh_kegxp"]
+[sub_resource type="BoxMesh" id="BoxMesh_yot3f"]
 
 [node name="DUST2" type="Node3D" groups=["dust_trail"]]
 
@@ -35,4 +35,4 @@ lifetime = 0.5
 randomness = 1.0
 trail_lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_x4vu0")
-draw_pass_1 = SubResource("QuadMesh_kegxp")
+draw_pass_1 = SubResource("BoxMesh_yot3f")

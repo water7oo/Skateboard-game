@@ -35,8 +35,10 @@ scale_curve = SubResource("CurveTexture_vrli0")
 [node name="burst_dust" type="GPUParticles3D" parent="."]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_8f8w8")
+emitting = false
 amount = 20
 lifetime = 0.2
+one_shot = true
 speed_scale = 0.7
 explosiveness = 1.0
 randomness = 1.0

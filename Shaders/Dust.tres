@@ -2,7 +2,6 @@
 
 [resource]
 render_priority = 1
-transparency = 1
 blend_mode = 1
 shading_mode = 0
 diffuse_mode = 3
