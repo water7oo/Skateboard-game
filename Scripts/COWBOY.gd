@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 
-var camera = preload("res://Cowboy_Player/PlayerCamera.tscn").instantiate()
+var camera = preload("res://SKATER/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
 var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
 #@onready var dodge_node_timer = $Dodge_Cooldown

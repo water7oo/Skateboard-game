@@ -33,7 +33,7 @@ mesh = SubResource("CapsuleMesh_e3cjs")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Armature/MeshInstance3D"]
-transform = Transform3D(-2.95453e-08, 0, 0.582987, 0, 0.366193, 0, -0.675918, 0, -2.54832e-08, -0.0887545, 0.358625, -0.553398)
+transform = Transform3D(-2.95453e-08, 0, 0.582987, 0, 0.366193, 0, -0.675918, 0, -2.54832e-08, -0.0100501, 0.358625, -0.553398)
 mesh = SubResource("BoxMesh_j5p3q")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

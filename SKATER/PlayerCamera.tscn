@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://7l5yih8w56c3"]
 
-[ext_resource type="Script" path="res://Cowboy_Player/follow_cam.gd" id="1_aphvx"]
-[ext_resource type="Shader" path="res://addons/interpolated_camera_3d/PIXELIZED.gdshader" id="2_ebpc2"]
+[ext_resource type="Script" path="res://Scripts/follow_cam.gd" id="1_ngwbs"]
+[ext_resource type="Shader" path="res://addons/interpolated_camera_3d/PIXELIZED.gdshader" id="2_0eep2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_td6vy"]
-shader = ExtResource("2_ebpc2")
+shader = ExtResource("2_0eep2")
 shader_parameter/pixelSize = 16
 
 [sub_resource type="QuadMesh" id="QuadMesh_n1m7q"]
@@ -13,14 +13,14 @@ size = Vector2(2, 2)
 
 [node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0591612)
-script = ExtResource("1_aphvx")
+script = ExtResource("1_ngwbs")
 spring_arm_pivot = NodePath("SpringArmPivot")
 
 [node name="SpringArmPivot" type="Node3D" parent="." groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0353532, 0.005)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.959388, 0.640344, 0, -0.28209, 2.17781, 0.00799954, 0.309982, 1.28707)
+transform = Transform3D(1, 0, 0, 0, 0.959388, 0.640344, 0, -0.28209, 2.17781, 0.00799954, 0.0246628, 1.28707)
 collision_mask = 255
 spring_length = 1.42
 margin = 1.0
