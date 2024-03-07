@@ -2862,7 +2862,7 @@ reset_on_save = false
 libraries = {
 "": SubResource("AnimationLibrary_cftkj")
 }
-blend_times = [&"Idle", &"Idle", 1.0, &"Idle", &"WALKING", 1.0, &"Idle", &"TPOSE", 1.0, &"Idle", &"RUNNING_LOW", 1.0, &"Idle", &"WALKING_LOW1", 1.0, &"Idle", &"RUNNING", 1.0, &"Idle", &"idle_low", 1.0]
+blend_times = [&"Idle", &"Idle", 1.0, &"Idle", &"RUNNING", 1.0, &"Idle", &"TPOSE", 1.0, &"Idle", &"RUNNING_LOW", 1.0, &"Idle", &"WALKING_LOW1", 1.0, &"Idle", &"WALKING", 1.0, &"Idle", &"idle_low", 1.0]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(2.2, 0, 0, 0, 2.2, 0, 0, 0, 2.2, 0, 1.87917, -0.246361)

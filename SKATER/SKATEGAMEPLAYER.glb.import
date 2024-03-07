@@ -3,18 +3,18 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dutkfdux7vbpt"
-path="res://.godot/imported/Buildings1.fbx-9ad366e12e82b29e7e603fe00535e28d.scn"
+uid="uid://bqp7wfp0sm7j5"
+path="res://.godot/imported/SKATEGAMEPLAYER.glb-047894269a605a383e2f4cc5aaea2ce9.scn"
 
 [deps]
 
-source_file="res://Buildings/Buildings1.fbx"
-dest_files=["res://.godot/imported/Buildings1.fbx-9ad366e12e82b29e7e603fe00535e28d.scn"]
+source_file="res://SKATER/SKATEGAMEPLAYER.glb"
+dest_files=["res://.godot/imported/SKATEGAMEPLAYER.glb-047894269a605a383e2f4cc5aaea2ce9.scn"]
 
 [params]
 
-nodes/root_type="Node3D"
-nodes/root_name="Scene Root"
+nodes/root_type=""
+nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 meshes/ensure_tangents=true
@@ -22,6 +22,7 @@ meshes/generate_lods=true
 meshes/create_shadow_meshes=true
 meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
@@ -29,4 +30,5 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={}
+gltf/naming_version=1
 gltf/embedded_image_handling=1

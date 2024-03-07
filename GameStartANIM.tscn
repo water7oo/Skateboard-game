@@ -1,6 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://byiwrnoah113n"]
-
-[ext_resource type="Texture2D" uid="uid://bxjqlnv4bhfmt" path="res://Solid_black.svg.png" id="1_7hqct"]
+[gd_scene load_steps=10 format=3 uid="uid://byiwrnoah113n"]
 
 [sub_resource type="Animation" id="Animation_3umi4"]
 resource_name = "Opener"
@@ -92,6 +90,22 @@ light_mode = 1
 
 [sub_resource type="QuadMesh" id="QuadMesh_bp5hn"]
 
+[sub_resource type="Gradient" id="Gradient_c2hk8"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_somia"]
+gradient = SubResource("Gradient_c2hk8")
+
+[sub_resource type="Gradient" id="Gradient_yq354"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2fqeu"]
+gradient = SubResource("Gradient_yq354")
+
 [node name="Opener" type="Node2D"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -106,16 +120,16 @@ position = Vector2(512, 312)
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="Letterbox controller"]
 material = SubResource("CanvasItemMaterial_nhbyx")
-position = Vector2(44.5005, -448)
+position = Vector2(44.5005, -136)
 rotation = -0.0118908
 scale = Vector2(1255.75, 391.565)
 mesh = SubResource("QuadMesh_bp5hn")
-texture = ExtResource("1_7hqct")
+texture = SubResource("GradientTexture1D_somia")
 
 [node name="MeshInstance2D2" type="MeshInstance2D" parent="Letterbox controller"]
 material = SubResource("CanvasItemMaterial_nhbyx")
-position = Vector2(44.5005, 456)
+position = Vector2(44.5005, 208)
 rotation = 3.12159
 scale = Vector2(1257, 346)
 mesh = SubResource("QuadMesh_bp5hn")
-texture = ExtResource("1_7hqct")
+texture = SubResource("GradientTexture1D_2fqeu")

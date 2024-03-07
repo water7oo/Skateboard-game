@@ -2,17 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuv5rccoj6qgo"
-path.s3tc="res://.godot/imported/IMG_2576.png-b4f5cb5fa3695d0044a3e70be09116bc.s3tc.ctex"
+uid="uid://cjh6xw7wbum2v"
+path.s3tc="res://.godot/imported/SKATEGAMEPLAYER_TextureGrid_32_devLight.png-9611acf0e3b68578511983171267afab.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={}
 
 [deps]
 
-source_file="res://My Textures/IMG_2576.png"
-dest_files=["res://.godot/imported/IMG_2576.png-b4f5cb5fa3695d0044a3e70be09116bc.s3tc.ctex"]
+source_file="res://SKATER/SKATEGAMEPLAYER_TextureGrid_32_devLight.png"
+dest_files=["res://.godot/imported/SKATEGAMEPLAYER_TextureGrid_32_devLight.png-9611acf0e3b68578511983171267afab.s3tc.ctex"]
 
 [params]
 
