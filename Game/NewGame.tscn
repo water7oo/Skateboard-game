@@ -1,9 +1,8 @@
 [gd_scene load_steps=17 format=3 uid="uid://ciyscyyb72708"]
 
-[ext_resource type="Texture2D" uid="uid://bknh5febfwrw6" path="res://addons/kenney_prototype_textures/dark/texture_13.png" id="1_3w5rw"]
+[ext_resource type="Texture2D" uid="uid://dx0vwoe766a8c" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="1_3bqnt"]
 [ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="4_p7ho0"]
-[ext_resource type="Script" path="res://Game/RespawnHitbox.gd" id="5_7vbi7"]
-[ext_resource type="PackedScene" uid="uid://dde8s7talh7vj" path="res://SKATER/node_3d.tscn" id="6_3r2cu"]
+[ext_resource type="PackedScene" uid="uid://dde8s7talh7vj" path="res://SKATER/Skate_Player.tscn" id="6_3r2cu"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://SKATER/PlayerCamera.tscn" id="6_m03c4"]
 [ext_resource type="Shader" path="res://addons/interpolated_camera_3d/PIXELIZED.gdshader" id="7_xje6t"]
 [ext_resource type="PackedScene" uid="uid://ctudhwisdi64s" path="res://FX/Burst_dust.tscn" id="12_0scso"]
@@ -26,7 +25,7 @@ background_mode = 2
 background_energy_multiplier = 1.3
 sky = SubResource("Sky_x3u07")
 sky_rotation = Vector3(0, 5.34943, 0)
-ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_color = Color(0.807843, 0.807843, 0.807843, 1)
 ambient_light_sky_contribution = 0.0
 tonemap_exposure = 0.76
 tonemap_white = 16.0
@@ -55,15 +54,25 @@ volumetric_fog_temporal_reprojection_amount = 0.552
 adjustment_enabled = true
 adjustment_saturation = 3.01
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hklh8"]
+albedo_texture = ExtResource("1_3bqnt")
+uv1_scale = Vector3(2.59, 2.59, 2.59)
+uv1_offset = Vector3(0, -0.39, 0)
+texture_filter = 0
+grow_amount = -1.032
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jdeq7"]
-shading_mode = 0
+shading_mode = 2
 diffuse_mode = 3
 specular_mode = 1
-albedo_texture = ExtResource("1_3w5rw")
-uv1_scale = Vector3(5.16, 5.16, 5.16)
+albedo_texture = ExtResource("1_3bqnt")
+roughness = 0.0
+uv1_scale = Vector3(-17.09, -17.09, -17.09)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_2ccde"]
-size = Vector3(1, 0.215723, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eny7o"]
+diffuse_mode = 3
+specular_mode = 1
+texture_filter = 0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ov31c"]
 shader = ExtResource("7_xje6t")
@@ -72,7 +81,7 @@ shader_parameter/pixelSize = 3
 [node name="Node3D" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.499315, 0.026168, 0, 0.052336, 0.99863, -0.5, 0.864838, -0.0453243, -6.46824, 61.2841, 3.0847)
+transform = Transform3D(-0.866025, -0.499315, 0.026168, 0, 0.052336, 0.99863, -0.5, 0.864838, -0.0453243, -6.46824, 61.2841, 24.9881)
 light_energy = 2.111
 light_indirect_energy = 0.0
 light_volumetric_fog_energy = 0.0
@@ -82,22 +91,61 @@ directional_shadow_mode = 0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tjwux")
 
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(2.92923, 0, 0, 0, 11.035, 0, 0, 0, 1.75446, 0, -0.414, 0)
+material_override = SubResource("StandardMaterial3D_hklh8")
+use_collision = true
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.704311, 0, 0, 0, 0.753764, 0, 0, 0, 0.999998, 0.502578, 0.0267621, -1.05807)
+polygon = PackedVector2Array(0, 0, 0.00230324, 0.0728411, 1.96646, -0.00596937, 1, 0)
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(-0.704311, 0, 8.74227e-08, 0, 0.793075, 0, -6.15728e-08, 0, -0.999997, -0.669048, 0.0243735, -2.05323)
+polygon = PackedVector2Array(0, 0, 0.00230324, 0.0728411, 1.96646, -0.00596937, 1, 0)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1.28759, 0, 0, 0, 0.999979, -0.0895081, 0.00346607, -1.55548)
+size = Vector3(1.19, 0.121338, 1)
+
+[node name="CSGPolygon3D3" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.704311, 0, 0, 0, 0.753764, 0, 0, 0, 0.999997, -4.30051, 0.0267621, -0.835291)
+polygon = PackedVector2Array(0, 0, 0.290438, 0.202312, 1.96646, -0.00596937, 1, 0)
+
+[node name="CSGPolygon3D4" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(-0.704311, 0, 8.74227e-08, 0, 0.793075, 0, -6.15728e-08, 0, -0.999996, -5.47213, 0.0243734, -1.83045)
+polygon = PackedVector2Array(0, 0, 0.00230324, 0.0728411, 1.96646, -0.00596937, 1, 0)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1.28759, 0, 0, 0, 0.999978, -4.8926, 0.00346607, -1.3327)
+size = Vector3(1.19, 0.121338, 1)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999989, 4.34709, 0.114631, 0.703913)
+size = Vector3(1.7251, 0.362774, 6.08264)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(-2.2354e-07, -16.2178, 2.18558e-07, 0, -1.88178e-07, -1.32725, 8.53828, -1.18358e-06, 1.59504e-14, 4.27123, 0.347263, 0.696048)
+operation = 2
+radius = 0.222262
+height = 0.166441
+sides = 64
+
 [node name="Ground" type="CSGCombiner3D" parent="."]
 transform = Transform3D(2.92923, 0, 0, 0, 11.035, 0, 0, 0, 1.75446, 0, -0.414, 0)
 material_override = SubResource("StandardMaterial3D_jdeq7")
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Ground"]
-transform = Transform3D(2.9, 0, 0, 0, 1, 0, 0, 0, 3.31521, 0, 0, 10)
-size = Vector3(5.2264, 0.0535513, 8.78831)
+transform = Transform3D(2.9, 0, 0, 0, 1, 0, 0, 0, 3.3152, 0, -0.557433, 10)
+size = Vector3(5.2264, 1.16842, 8.78831)
+material = SubResource("StandardMaterial3D_eny7o")
 
-[node name="Area3D" type="Area3D" parent="."]
-script = ExtResource("5_7vbi7")
-
-[node name="Death" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(235.275, 0, 0, 0, 57.3618, 0, 0, 0, 314.842, 0, -17.3825, 0)
-shape = SubResource("BoxShape3D_2ccde")
-disabled = true
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Ground"]
+transform = Transform3D(3.84436, 0, 0, 0, 0.365255, 0, 0, 0, 6.20393, 0, 0.0778911, 6.81685)
+operation = 2
+radial_segments = 20
+rings = 8
 
 [node name="Preview" type="Control" parent="."]
 layout_mode = 3
@@ -123,29 +171,35 @@ visible = false
 [node name="SubViewport" type="SubViewport" parent="Preview/SubViewportContainer"]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(1152, 648)
+size = Vector2i(614, 777)
 render_target_update_mode = 4
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -0.71159, -0.185141, 8.79126)
 target = NodePath("../Player/CamTarget")
-speed = 3.0
+speed = 12.0
 enabled = true
 
 [node name="Player" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_3r2cu")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.00987428, -0.118531, 0.0031091)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.00987428, 0.0885694, 0.0031091)
 
 [node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Player"]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.0182501, 0.143317, -0.0149716)
 
-[node name="DUST5" parent="Preview/SubViewportContainer/SubViewport/Player" instance=ExtResource("12_0scso")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -0.0123429, 0.148164, -0.00388637)
+[node name="Particle_Locater" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0157961, 0, 0.703527)
 
-[node name="DUST4" parent="Preview/SubViewportContainer/SubViewport/Player" instance=ExtResource("12_bbdr3")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0123429, 0.148164, -0.00388637)
+[node name="DUST5" parent="Preview/SubViewportContainer/SubViewport/Player/Particle_Locater" instance=ExtResource("12_0scso")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -0.0123429, 0.148164, 0.468682)
+visible = false
 
-[node name="DUST3" parent="Preview/SubViewportContainer/SubViewport/Player" instance=ExtResource("12_d51g0")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -0.0123429, 0.148164, -0.00388637)
+[node name="DUST4" parent="Preview/SubViewportContainer/SubViewport/Player/Particle_Locater" instance=ExtResource("12_bbdr3")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0123429, 0.148164, -0.12408)
 
-[node name="DUST2" parent="Preview/SubViewportContainer/SubViewport/Player" instance=ExtResource("4_p7ho0")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0348958, 0.260605, 0.0629781)
+[node name="DUST3" parent="Preview/SubViewportContainer/SubViewport/Player/Particle_Locater" instance=ExtResource("12_d51g0")]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -0.0123429, 0.148164, 0.483268)
+visible = false
+
+[node name="DUST2" parent="Preview/SubViewportContainer/SubViewport/Player/Particle_Locater" instance=ExtResource("4_p7ho0")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0348958, 0.260605, 0.452474)
+visible = false

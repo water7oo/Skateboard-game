@@ -11,17 +11,17 @@ curve = SubResource("Curve_w4jfo")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x4vu0"]
 spread = 105.97
-gravity = Vector3(0, 0, 0)
 initial_velocity_max = 3.0
+gravity = Vector3(0, 0, 0)
 damping_min = 12.903
 damping_max = 29.032
 scale_min = 0.2
 scale_max = 0.3
 scale_curve = SubResource("CurveTexture_llsai")
-turbulence_noise_strength = 0.03
-turbulence_noise_scale = 4.81
 anim_speed_min = 1.53
 anim_speed_max = 4.46
+turbulence_noise_strength = 0.03
+turbulence_noise_scale = 4.81
 
 [sub_resource type="BoxMesh" id="BoxMesh_yot3f"]
 
@@ -30,7 +30,8 @@ anim_speed_max = 4.46
 [node name="Dust" type="GPUParticles3D" parent="."]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
 material_override = ExtResource("1_nlbt2")
-amount = 10
+emitting = false
+amount = 30
 lifetime = 0.5
 randomness = 1.0
 trail_lifetime = 0.5

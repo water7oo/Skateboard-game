@@ -23,17 +23,18 @@ emission_sphere_radius = 0.5
 gravity = Vector3(0, 0, 0)
 damping_max = 14.516
 scale_min = 0.3
-scale_max = 0.5
+scale_max = 0.4
 scale_curve = SubResource("CurveTexture_6t3s6")
 
 [sub_resource type="QuadMesh" id="QuadMesh_kegxp"]
+lightmap_size_hint = Vector2i(7, 7)
 
 [node name="DUST4" type="Node3D" groups=["move_dust"]]
 
 [node name="move_dust" type="GPUParticles3D" parent="."]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0.0624622, 0)
 material_override = SubResource("StandardMaterial3D_aoycw")
-amount = 2
+amount = 20
 randomness = 1.0
 fixed_fps = 60
 trail_lifetime = 0.5

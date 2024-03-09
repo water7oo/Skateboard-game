@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://dde8s7talh7vj"]
+
+[ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="2_jf7yi"]
+[ext_resource type="StyleBox" uid="uid://djj55b17fblr1" path="res://ui/Sprint_Fill_Green.tres" id="3_a2x41"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aq1lg"]
+diffuse_mode = 3
+specular_mode = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_ufhhm"]
+material = SubResource("StandardMaterial3D_aq1lg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cdq48"]
+diffuse_mode = 3
+specular_mode = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_paewl"]
+material = SubResource("StandardMaterial3D_cdq48")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uhrri"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pgn5r"]
+size = Vector3(1, 0.263672, 2.04694)
+
+[node name="Player" type="VehicleBody3D" groups=["player"]]
+
+[node name="Armature" type="Node3D" parent="."]
+
+[node name="Board" type="MeshInstance3D" parent="Armature"]
+transform = Transform3D(0.74, 0, 0, 0, 0.061, 0, 0, 0, 1.968, 0, 0.209599, 0)
+mesh = SubResource("BoxMesh_ufhhm")
+skeleton = NodePath("../..")
+
+[node name="Wheel1" type="MeshInstance3D" parent="Armature/Board"]
+transform = Transform3D(0.0060804, -0.0472863, 0, 3.42544, 0.0123525, 0, 0, 0, 0.105183, 0.390021, -1.67548, 0.36958)
+mesh = SubResource("CylinderMesh_paewl")
+
+[node name="Wheel2" type="MeshInstance3D" parent="Armature/Board"]
+transform = Transform3D(0.0060804, -0.0472863, 0, 3.42544, 0.0123525, 0, 0, 0, 0.105183, -0.368805, -1.67548, 0.36958)
+mesh = SubResource("CylinderMesh_paewl")
+
+[node name="Wheel3" type="MeshInstance3D" parent="Armature/Board"]
+transform = Transform3D(0.0060804, -0.0472863, 0, 3.42544, 0.0123525, 0, 0, 0, 0.105183, 0.390021, -1.67548, -0.384019)
+mesh = SubResource("CylinderMesh_paewl")
+
+[node name="Wheel4" type="MeshInstance3D" parent="Armature/Board"]
+transform = Transform3D(0.0060804, -0.0472863, 0, 3.42544, 0.0123525, 0, 0, 0, 0.105183, -0.368805, -1.67548, -0.384019)
+mesh = SubResource("CylinderMesh_paewl")
+
+[node name="Refill_Cooldown" type="Timer" parent="."]
+process_callback = 0
+wait_time = 5.0
+autostart = true
+
+[node name="Dodge_Cooldown_Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="UI Cooldowns" parent="." instance=ExtResource("2_jf7yi")]
+offset_left = 0.0
+offset_top = 576.0
+offset_right = 336.0
+offset_bottom = 584.0
+theme_override_styles/background = SubResource("StyleBoxFlat_uhrri")
+theme_override_styles/fill = ExtResource("3_a2x41")
+value = 50.0
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.235, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.127702, -0.0125427)
+shape = SubResource("BoxShape3D_pgn5r")
