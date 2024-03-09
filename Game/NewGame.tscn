@@ -82,11 +82,8 @@ shader_parameter/pixelSize = 3
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.499315, 0.026168, 0, 0.052336, 0.99863, -0.5, 0.864838, -0.0453243, -6.46824, 61.2841, 24.9881)
-light_energy = 2.111
-light_indirect_energy = 0.0
-light_volumetric_fog_energy = 0.0
-shadow_normal_bias = 2.139
-directional_shadow_mode = 0
+light_color = Color(0.615686, 0.615686, 0.615686, 1)
+shadow_opacity = 0.56
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tjwux")

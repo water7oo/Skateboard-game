@@ -1,12 +1,19 @@
-[gd_scene load_steps=10 format=3 uid="uid://dde8s7talh7vj"]
+[gd_scene load_steps=11 format=3 uid="uid://dde8s7talh7vj"]
 
 [ext_resource type="Script" path="res://Scripts/COWBOY.gd" id="1_g5dsg"]
+[ext_resource type="Texture2D" uid="uid://bsbog7ybh3xoi" path="res://addons/kenney_prototype_textures/light/texture_09.png" id="2_60hy4"]
 [ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="2_jf7yi"]
 [ext_resource type="StyleBox" uid="uid://djj55b17fblr1" path="res://ui/Sprint_Fill_Green.tres" id="3_a2x41"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aq1lg"]
 diffuse_mode = 3
 specular_mode = 1
+albedo_texture = ExtResource("2_60hy4")
+albedo_texture_force_srgb = true
+roughness = 0.0
+uv1_scale = Vector3(6.175, 6.175, 6.175)
+uv1_offset = Vector3(0, -0.015, 0)
+texture_filter = 0
 
 [sub_resource type="BoxMesh" id="BoxMesh_ufhhm"]
 material = SubResource("StandardMaterial3D_aq1lg")
@@ -26,15 +33,18 @@ size = Vector3(1, 0.230469, 2.04694)
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.175259, 0)
+wall_min_slide_angle = 3.14159
 floor_stop_on_slope = false
-floor_max_angle = 3.14159
-floor_snap_length = 1.0
+floor_max_angle = 0.174533
 script = ExtResource("1_g5dsg")
+BASE_SPEED = 2
+MAX_SPEED = 6
+BASE_ACCELERATION = 4
 
 [node name="Armature" type="Node3D" parent="."]
 
 [node name="Board" type="MeshInstance3D" parent="Armature"]
-transform = Transform3D(0.74, 0, 0, 0, 0.061, 0, 0, 0, 1.968, 0, 0.209599, 0)
+transform = Transform3D(0.74, 0, 0, 0, 0.061, 0, 0, 0, 1.968, 0, 0.081516, 0)
 mesh = SubResource("BoxMesh_ufhhm")
 skeleton = NodePath("../..")
 
@@ -73,8 +83,8 @@ theme_override_styles/fill = ExtResource("3_a2x41")
 value = 50.0
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.235, 0.00181365)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0822551, 0.00181365)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.144304, -0.0125427)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00600561, -0.0125427)
 shape = SubResource("BoxShape3D_pgn5r")

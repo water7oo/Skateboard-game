@@ -125,6 +125,8 @@ var hitbox_active = false
 var hitbox_duration = 0.2  # Adjust the duration of the hitbox here
 var is_attacking = false
 var jumping = Input.is_action_pressed("move_jump")
+var drifting = Input.is_action_pressed("move_drift")
+
 
 
 func _ready():
@@ -149,13 +151,7 @@ func _proccess_movement(delta):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
-	
-	
-	
-	
-	armature.rotation = Vector3.UP
-	
-	print(get_floor_angle())
+	_proccess_drift(delta)
 	
 	if direction:
 		is_moving = true
@@ -170,7 +166,6 @@ func _proccess_movement(delta):
 		if direction && !is_sprinting && is_on_floor():
 			target_blend_amount = 0.0
 			current_blend_amount = lerp(current_blend_amount, target_blend_amount, blend_lerp_speed * delta)
-			#$AnimationTree.set("parameters/Ground_Blend/blend_amount", 0)
 		else:
 			target_blend_amount = -1.0
 
@@ -217,60 +212,15 @@ func _proccess_movement(delta):
 
 
 func _proccess_boosting(delta):
-	
 	if sprinting && is_moving && Stamina_bar.value > 0 && can_sprint:
 		sprint_timer += delta
 		is_sprinting = true
 		Stamina_bar.value -= sprinting_deplete_rate * delta
 		
-		
 		target_speed = MAX_SPEED
 		ACCELERATION = DASH_ACCELERATION
 		DECELERATION = DASH_DECELERATION
 		target_blend_amount = 1.0
-		current_blend_amount = lerp(current_blend_amount, target_blend_amount, blend_lerp_speed * delta)
-		
-		#if sprint_timer >= 0.2:
-			##$AnimationTree.set("parameters/Ground_Blend/blend_amount", 1)
-		
-		if sprint_timer >= 2:
-			DASH_ACCELERATION = SECOND_DASH_ACCELERATION
-			DASH_DECELERATION = SECOND_DASH_DECELERATION
-			target_speed = SECOND_MAX_SPEED
-			#$AnimationTree.set("parameters/Ground_Blend2/blend_amount", 0)
-		#else:
-			##$AnimationTree.set("parameters/Ground_Blend2/blend_amount", -1)
-		
-	if Input.is_action_just_released("move_sprint") || sprint_timer >= 3 && jumping || jumping:
-		is_sprinting = false
-		target_speed = BASE_SPEED
-		ACCELERATION = BASE_ACCELERATION
-		DECELERATION = BASE_DECELERATION
-		sprint_timer = 0.0
-		#$AnimationTree.set("parameters/Jump_Blend/blend_amount", 1)
-
-
-	
-		if Stamina_bar.value <= 0:
-			is_sprinting = false
-			can_sprint = false
-			sprinting_refill_rate = sprinting_refill_rate_zero
-			sprint_timer = 0.0
-			
-#			if sprinting:
-#				print("YOU CANNOT SPRINT")
-#				is_sprinting = false
-#				sprinting_deplete_rate = 0
-#				$AnimationTree.set("parameters/Ground_Blend2/blend_amount", -1)
-#
-			
-			if Stamina_bar.value >= 0:
-				if is_moving:
-					current_speed = STAMINA_DEPLETED_SPEED
-		else:
-			sprinting_refill_rate = sprinting_refill_rate
-			
-			
 	else:
 		is_sprinting = false
 		target_speed = BASE_SPEED
@@ -385,7 +335,27 @@ func _process_walljump(delta):
 							if node.has_node("AnimationPlayer"):
 								node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
 
+func _proccess_drift(delta):
+	var prev_camera_rotation = camera.rotation
+	
+	if Input.is_action_pressed("move_drift") && is_on_floor():
+		var drift_angle = 0
+		print(camera.rotation.y)
+		if Input.is_action_pressed("move_left"):
+			drift_angle = -45
+		elif Input.is_action_pressed("move_right"):
+			drift_angle = 45
+		armature.rotation.y = deg_to_rad(drift_angle)
+		
+		
+		
 
+func align_with_floor() -> void:
+	if is_on_floor():
+		var normal : Vector3 = get_floor_normal()
+		global_transform.basis.y = normal
+		global_transform.basis = global_transform.basis.orthonormalized()
+		
 func _physics_process(delta):
 	_proccess_movement(delta)
 	_proccess_jump(delta)
@@ -393,8 +363,11 @@ func _physics_process(delta):
 	_proccess_bursting(delta)
 	_proccess_cooldown(delta)
 	_proccess_boosting(delta)
+	_proccess_drift(delta)
 	
 	
+	var surface_normal = get_floor_normal()
+
 	if Input.is_action_just_pressed("mouse_left"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
