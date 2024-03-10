@@ -1,17 +1,27 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://cx0dsad2my6ud"]
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cx0dsad2my6ud"]
+
+[sub_resource type="Gradient" id="Gradient_2xe3i"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.455882, 0.779412, 0.941176)
+colors = PackedColorArray(0, 0.323723, 0.493842, 1, 0, 0.639327, 0.971865, 1, 0, 0.851891, 0.80908, 1, 0.543666, 0.88786, 0.80237, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vrxqm"]
+gradient = SubResource("Gradient_2xe3i")
+width = 73
 
 [resource]
 render_priority = 1
-blend_mode = 1
 shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
 disable_ambient_light = true
+disable_fog = true
+albedo_texture = SubResource("GradientTexture2D_vrxqm")
 texture_filter = 0
 texture_repeat = false
 billboard_mode = 3
 billboard_keep_scale = true
-particles_anim_h_frames = 5
+particles_anim_h_frames = 6
 particles_anim_v_frames = 1
 particles_anim_loop = false
 grow_amount = -2.759

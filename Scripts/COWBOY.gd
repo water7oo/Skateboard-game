@@ -182,7 +182,7 @@ func _proccess_movement(delta):
 	for node in dust_trail:
 			var particle_emitter = node.get_node("Dust")
 			if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
-				var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED || dodging
+				var should_emit_particles = Input.is_action_pressed("move_drift") && is_on_floor() && current_speed > 3
 				particle_emitter.set_emitting(should_emit_particles)
 				
 			if jumping || velocity.y > 0:
@@ -197,7 +197,7 @@ func _proccess_movement(delta):
 
 	for node in move_dust:
 		var particle_emitter = node.get_node("move_dust")
-		if particle_emitter && is_on_floor() && direction && !sprinting:
+		if particle_emitter && is_on_floor() && direction && sprinting:
 			particle_emitter.set_emitting(true)
 		else:
 			particle_emitter.set_emitting(false)
@@ -205,11 +205,10 @@ func _proccess_movement(delta):
 			
 	for node in burst_dust:
 		var particle_emitter = node.get_node("burst_dust")
-		if particle_emitter && is_on_floor() && dodging && Stamina_bar.value >= 20:
+		if particle_emitter && is_on_floor() && dodging:
 			particle_emitter.set_emitting(true)
 		else:
 			particle_emitter.set_emitting(false)
-
 
 func _proccess_boosting(delta):
 	if sprinting && is_moving && Stamina_bar.value > 0 && can_sprint:
@@ -336,25 +335,15 @@ func _process_walljump(delta):
 								node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
 
 func _proccess_drift(delta):
-	var prev_camera_rotation = camera.rotation
-	
-	if Input.is_action_pressed("move_drift") && is_on_floor():
-		var drift_angle = 0
-		print(camera.rotation.y)
+	var drift_angle = 0
+	if Input.is_action_pressed("move_drift") && is_on_floor() && current_speed >= 2:
 		if Input.is_action_pressed("move_left"):
-			drift_angle = -45
+			drift_angle = 5
 		elif Input.is_action_pressed("move_right"):
-			drift_angle = 45
-		armature.rotation.y = deg_to_rad(drift_angle)
-		
-		
-		
-
-func align_with_floor() -> void:
-	if is_on_floor():
-		var normal : Vector3 = get_floor_normal()
-		global_transform.basis.y = normal
-		global_transform.basis = global_transform.basis.orthonormalized()
+			drift_angle = -5
+		armature.rotate_y(deg_to_rad(drift_angle)) 
+	else:
+		drift_angle = 0
 		
 func _physics_process(delta):
 	_proccess_movement(delta)
@@ -366,8 +355,16 @@ func _physics_process(delta):
 	_proccess_drift(delta)
 	
 	
-	var surface_normal = get_floor_normal()
+	if $RayCast3D.is_colliding():
+		var ground_normal = $RayCast3D.get_collision_normal()
+		var ground_normal2 = $RayCast3D2.get_collision_normal()
+		var ground_normal3 = $RayCast3D3.get_collision_normal()
+		var ground_normal4 = $RayCast3D4.get_collision_normal()
+		var ground_normal5 = $RayCast3D5.get_collision_normal()
+		armature.basis.y = (ground_normal + ground_normal2 + ground_normal3 + ground_normal4 + ground_normal5)/5
 
+	
+	
 	if Input.is_action_just_pressed("mouse_left"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 

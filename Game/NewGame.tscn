@@ -1,13 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=13 format=3 uid="uid://ciyscyyb72708"]
 
 [ext_resource type="Texture2D" uid="uid://dx0vwoe766a8c" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="1_3bqnt"]
-[ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="4_p7ho0"]
 [ext_resource type="PackedScene" uid="uid://dde8s7talh7vj" path="res://SKATER/Skate_Player.tscn" id="6_3r2cu"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://SKATER/PlayerCamera.tscn" id="6_m03c4"]
 [ext_resource type="Shader" path="res://addons/interpolated_camera_3d/PIXELIZED.gdshader" id="7_xje6t"]
-[ext_resource type="PackedScene" uid="uid://ctudhwisdi64s" path="res://FX/Burst_dust.tscn" id="12_0scso"]
-[ext_resource type="PackedScene" uid="uid://rlcylvhdacih" path="res://FX/Move_Dust.tscn" id="12_bbdr3"]
-[ext_resource type="PackedScene" uid="uid://d1yu2x7osdqa5" path="res://FX/jump_dust.tscn" id="12_d51g0"]
 [ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://GameStartANIM.tscn" id="13_a8nsm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xfhkw"]
@@ -76,7 +72,7 @@ texture_filter = 0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ov31c"]
 shader = ExtResource("7_xje6t")
-shader_parameter/pixelSize = 3
+shader_parameter/pixelSize = 2
 
 [node name="Node3D" type="Node3D"]
 
@@ -99,7 +95,7 @@ polygon = PackedVector2Array(0, 0, 0.00230324, 0.0728411, 1.96646, -0.00596937, 
 
 [node name="CSGPolygon3D2" type="CSGPolygon3D" parent="CSGCombiner3D"]
 transform = Transform3D(-0.704311, 0, 8.74227e-08, 0, 0.793075, 0, -6.15728e-08, 0, -0.999997, -0.669048, 0.0243735, -2.05323)
-polygon = PackedVector2Array(0, 0, 0.00230324, 0.0728411, 1.96646, -0.00596937, 1, 0)
+polygon = PackedVector2Array(0, 0, 0.021871, 0.0718108, 1.96646, -0.00596937, 1, 0)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1.28759, 0, 0, 0, 0.999979, -0.0895081, 0.00346607, -1.55548)
@@ -122,11 +118,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999989, 4.34709, 0.114631, 0.7
 size = Vector3(1.7251, 0.362774, 6.08264)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
-transform = Transform3D(-2.2354e-07, -16.2178, 2.18558e-07, 0, -1.88178e-07, -1.32725, 8.53828, -1.18358e-06, 1.59504e-14, 4.27123, 0.347263, 0.696048)
+transform = Transform3D(-2.2354e-07, -16.2178, 2.18558e-07, 0, -1.88178e-07, -1.32725, 8.53828, -1.18358e-06, 1.59504e-14, 4.27123, 0.30201, 0.696048)
 operation = 2
 radius = 0.222262
 height = 0.166441
-sides = 64
 
 [node name="Ground" type="CSGCombiner3D" parent="."]
 transform = Transform3D(2.92923, 0, 0, 0, 11.035, 0, 0, 0, 1.75446, 0, -0.414, 0)
@@ -182,21 +177,3 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.00987428, 0.0885694, 
 
 [node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Player"]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.0182501, 0.143317, -0.0149716)
-
-[node name="Particle_Locater" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0157961, 0, 0.703527)
-
-[node name="DUST5" parent="Preview/SubViewportContainer/SubViewport/Player/Particle_Locater" instance=ExtResource("12_0scso")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -0.0123429, 0.148164, 0.468682)
-visible = false
-
-[node name="DUST4" parent="Preview/SubViewportContainer/SubViewport/Player/Particle_Locater" instance=ExtResource("12_bbdr3")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0123429, 0.148164, -0.12408)
-
-[node name="DUST3" parent="Preview/SubViewportContainer/SubViewport/Player/Particle_Locater" instance=ExtResource("12_d51g0")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -0.0123429, 0.148164, 0.483268)
-visible = false
-
-[node name="DUST2" parent="Preview/SubViewportContainer/SubViewport/Player/Particle_Locater" instance=ExtResource("4_p7ho0")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0348958, 0.260605, 0.452474)
-visible = false

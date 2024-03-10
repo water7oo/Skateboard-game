@@ -41,3 +41,9 @@ mesh = SubResource("QuadMesh_n1m7q")
 skeleton = NodePath("../../../../..")
 
 [node name="Marker3D" type="Marker3D" parent="SpringArmPivot"]
+
+[node name="Cam_r" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.312364, 0, 0)
+
+[node name="Cam_l" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.359691, 0, 0)
