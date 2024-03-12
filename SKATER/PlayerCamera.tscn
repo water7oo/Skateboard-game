@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://7l5yih8w56c3"]
+[gd_scene load_steps=7 format=3 uid="uid://7l5yih8w56c3"]
 
 [ext_resource type="Script" path="res://Scripts/follow_cam.gd" id="1_ngwbs"]
 [ext_resource type="Shader" path="res://addons/interpolated_camera_3d/PIXELIZED.gdshader" id="2_0eep2"]
@@ -10,6 +10,10 @@ shader_parameter/pixelSize = 16
 [sub_resource type="QuadMesh" id="QuadMesh_n1m7q"]
 flip_faces = true
 size = Vector2(2, 2)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dc6w0"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_70ixb"]
 
 [node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0591612)
@@ -47,3 +51,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.312364, 0, 0)
 
 [node name="Cam_l" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.359691, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.592, 0, 0, 0, 0.087, 0, 0, 0, 0.592, -0.902278, 0.220434, 0)
+mesh = SubResource("CapsuleMesh_dc6w0")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.425, 0, 0, 0, 0.425, 0, 0, 0, 0.425, 1.27046, 0, 0)
+mesh = SubResource("PrismMesh_70ixb")

@@ -26,7 +26,7 @@ var blend_lerp_speed = 10.0  # Adjust the speed of blending
 
 #Basic Movement
 @export var mouse_sensitivity = 0.005
-@export var joystick_sensitivity = 0.005
+@export var joystick_sensitivity = 0.1
 @export var BASE_SPEED = 3
 @export var MAX_SPEED = 7
 @export var  STAMINA_DEPLETED_SPEED = 1
@@ -113,20 +113,14 @@ var fall = Vector3()
 var wall_normal
 var direction = Vector3()
 
-#Attacking
-
-#var attacklight_1 = Input.is_action_just_pressed("attack_light_1")
-#var attacklight1_timer = 0.0
-#var attack_cooldown = 0.0
-#var attacklight2_timer = 0.0
-# Hitbox variables
 var hitbox = null
 var hitbox_active = false
 var hitbox_duration = 0.2  # Adjust the duration of the hitbox here
 var is_attacking = false
 var jumping = Input.is_action_pressed("move_jump")
 var drifting = Input.is_action_pressed("move_drift")
-
+var camera_rotation_speed = 30
+var armature_rotation_speed = 30
 
 
 func _ready():
@@ -142,11 +136,26 @@ func _unhandled_input(event):
 		var rotation_x = spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity
 		var rotation_y = spring_arm_pivot.rotation.y - event.relative.x * mouse_sensitivity
 
-		rotation_x = clamp(rotation_x, deg_to_rad(-60), deg_to_rad(30))
+		rotation_x = clamp(rotation_x, deg_to_rad(-80), deg_to_rad(2))
 
 		spring_arm_pivot.rotation.x = rotation_x
 		spring_arm_pivot.rotation.y = rotation_y
 
+	if Input.is_action_pressed("cam_down"):
+		spring_arm_pivot.rotation.x -= joystick_sensitivity 
+	if Input.is_action_pressed("cam_up"):
+		spring_arm_pivot.rotation.x += joystick_sensitivity 
+	if Input.is_action_pressed("cam_right"):
+		spring_arm_pivot.rotation.y -= joystick_sensitivity 
+	if Input.is_action_pressed("cam_left"):
+		spring_arm_pivot.rotation.y += joystick_sensitivity 
+
+
+func rotate_player_and_camera(direction: int, delta: float) -> void:
+	var rotation_speed = armature_rotation_speed * delta * direction
+	armature.rotate(Vector3.UP, deg_to_rad(rotation_speed))
+	spring_arm_pivot.rotate(Vector3.UP, deg_to_rad(rotation_speed))
+	
 func _proccess_movement(delta):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -169,15 +178,28 @@ func _proccess_movement(delta):
 		else:
 			target_blend_amount = -1.0
 
-	
-		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
-		
 	elif !direction && is_on_floor():
 			velocity.x = move_toward(velocity.x, 0, DECELERATION * delta)
 			velocity.z = move_toward(velocity.z, 0, DECELERATION * delta)
 			current_speed = sqrt(velocity.x * velocity.x + velocity.z * velocity.z)
 			
+
+
+
+	var target_rotation = atan2(-velocity.x, -velocity.z)
+	var turn_radius = 45
+	var angle_adjustment = atan2(turn_radius, current_speed)
+	if Input.is_action_pressed("move_left"):
+		rotate_player_and_camera(9, delta)
+	elif Input.is_action_pressed("move_right"):
+		rotate_player_and_camera(-9, delta)
+		
+	elif Input.is_action_just_pressed("move_forward"):
+		print("Player is going forwards")
 	
+	armature.rotation.y = lerp_angle(armature.rotation.y, target_rotation, LERP_VAL)
+
+	#armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
 
 	for node in dust_trail:
 			var particle_emitter = node.get_node("Dust")
@@ -336,11 +358,11 @@ func _process_walljump(delta):
 
 func _proccess_drift(delta):
 	var drift_angle = 0
-	if Input.is_action_pressed("move_drift") && is_on_floor() && current_speed >= 2:
+	if Input.is_action_pressed("move_drift") && is_on_floor():
 		if Input.is_action_pressed("move_left"):
-			drift_angle = 5
+			drift_angle = 4
 		elif Input.is_action_pressed("move_right"):
-			drift_angle = -5
+			drift_angle = -4
 		armature.rotate_y(deg_to_rad(drift_angle)) 
 	else:
 		drift_angle = 0
@@ -355,16 +377,16 @@ func _physics_process(delta):
 	_proccess_drift(delta)
 	
 	
-	if $RayCast3D.is_colliding():
-		var ground_normal = $RayCast3D.get_collision_normal()
-		var ground_normal2 = $RayCast3D2.get_collision_normal()
-		var ground_normal3 = $RayCast3D3.get_collision_normal()
-		var ground_normal4 = $RayCast3D4.get_collision_normal()
-		var ground_normal5 = $RayCast3D5.get_collision_normal()
-		armature.basis.y = (ground_normal + ground_normal2 + ground_normal3 + ground_normal4 + ground_normal5)/5
-
-	
-	
+	#if $Armature/Board/RayCast3D.is_colliding():
+		#var ground_normal = $Armature/Board/RayCast3D.get_collision_normal()
+		#armature.basis.y = ground_normal
+		
+	if $Armature/Board/RayCast3D.is_colliding():
+		var ground_normal = $Armature/Board/RayCast3D.get_collision_normal()
+		armature.basis.y = ground_normal
+		
+		
+		
 	if Input.is_action_just_pressed("mouse_left"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 

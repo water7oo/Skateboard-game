@@ -32,63 +32,63 @@ material = SubResource("StandardMaterial3D_cdq48")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uhrri"]
 bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_x34x1"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k5ex1"]
+height = 2.05194
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.175259, 0)
-floor_stop_on_slope = false
-floor_max_angle = 1.5708
-floor_snap_length = 1.0
 script = ExtResource("1_g5dsg")
 BASE_SPEED = 2
 MAX_SPEED = 6
 BASE_ACCELERATION = 4
 
 [node name="Armature" type="Node3D" parent="."]
-rotation_edit_mode = 1
 
 [node name="Board" type="MeshInstance3D" parent="Armature"]
 transform = Transform3D(0.74, 0, 0, 0, 0.061, 0, 0, 0, 1.968, 0, 0.081516, 0)
 mesh = SubResource("BoxMesh_ufhhm")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Armature/Board"]
+[node name="FrontBackDebug" type="MeshInstance3D" parent="Armature/Board"]
 transform = Transform3D(0.303, 0, 0, 0, 3.673, 0, 0, 0, 0.114, 0, 0.90831, 0.557302)
 mesh = SubResource("BoxMesh_feb2k")
 
-[node name="Particle_Locater" type="Marker3D" parent="Armature/Board/MeshInstance3D"]
+[node name="Particle_Locater" type="Marker3D" parent="Armature/Board/FrontBackDebug"]
 transform = Transform3D(2.12291, 0, 0, 0, 2.1245, 0, 0, 0, 2.12166, -0.0704491, -0.611117, -0.572209)
 
-[node name="Burst" parent="Armature/Board/MeshInstance3D/Particle_Locater" instance=ExtResource("2_6kq53")]
+[node name="Burst" parent="Armature/Board/FrontBackDebug/Particle_Locater" instance=ExtResource("2_6kq53")]
 transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -0.0123429, 0.148164, 0.468682)
 
-[node name="Speed" parent="Armature/Board/MeshInstance3D/Particle_Locater" instance=ExtResource("3_mgjii")]
+[node name="Speed" parent="Armature/Board/FrontBackDebug/Particle_Locater" instance=ExtResource("3_mgjii")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0123429, 0.148164, 0.465231)
 
-[node name="Hop" parent="Armature/Board/MeshInstance3D/Particle_Locater" instance=ExtResource("4_hwfl0")]
+[node name="Hop" parent="Armature/Board/FrontBackDebug/Particle_Locater" instance=ExtResource("4_hwfl0")]
 transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -0.0123429, 0.148164, 0.483268)
 visible = false
 
-[node name="Burnout" parent="Armature/Board/MeshInstance3D/Particle_Locater" instance=ExtResource("5_dklft")]
+[node name="Burnout" parent="Armature/Board/FrontBackDebug/Particle_Locater" instance=ExtResource("5_dklft")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0348958, 0.260605, 0.452474)
 
+[node name="RayCast3D" type="RayCast3D" parent="Armature/Board"]
+transform = Transform3D(1.35135, 0, 0, 0, 6.46495, 0, 0, 0, 0.50813, 0.004171, 0.0121164, 0.00476544)
+
 [node name="Wheel1" type="MeshInstance3D" parent="Armature"]
-transform = Transform3D(0.00451787, -0.0363131, 0, 0.209801, 5.31355e-06, 0, 0, 0, 0.207842, 0.289757, -0.0206883, 0.730348)
+transform = Transform3D(-9.17282e-09, -0.0363131, 0, 0.20985, -1.5873e-09, 0, 0, 0, 0.207842, 0.276187, -0.0374248, 0.730348)
 mesh = SubResource("CylinderMesh_paewl")
 skeleton = NodePath("../Board")
 
 [node name="Wheel2" type="MeshInstance3D" parent="Armature"]
-transform = Transform3D(0.00451779, -0.0351341, 0, 0.209801, 0.000756566, 0, 0, 0, 0.207842, -0.274057, -0.0206883, 0.730348)
+transform = Transform3D(-9.17282e-09, -0.0351422, 0, 0.20985, -1.53612e-09, 0, 0, 0, 0.207842, -0.290221, -0.0390777, 0.730348)
 mesh = SubResource("CylinderMesh_paewl")
 skeleton = NodePath("../Board")
 
 [node name="Wheel3" type="MeshInstance3D" parent="Armature"]
-transform = Transform3D(0.00451779, -0.0351341, 0, 0.209801, 0.000756566, 0, 0, 0, 0.207842, 0.289757, -0.0206883, -0.758764)
+transform = Transform3D(-9.17282e-09, -0.0351422, 0, 0.20985, -1.53612e-09, 0, 0, 0, 0.207842, 0.273593, -0.0390777, -0.758764)
 mesh = SubResource("CylinderMesh_paewl")
 skeleton = NodePath("../Board")
 
 [node name="Wheel4" type="MeshInstance3D" parent="Armature"]
-transform = Transform3D(0.00451779, -0.0351341, 0, 0.209801, 0.000756566, 0, 0, 0, 0.207842, -0.274057, -0.0206883, -0.758764)
+transform = Transform3D(-9.17282e-09, -0.0351422, 0, 0.20985, -1.53612e-09, 0, 0, 0, 0.207842, -0.290221, -0.0390777, -0.758764)
 mesh = SubResource("CylinderMesh_paewl")
 skeleton = NodePath("../Board")
 
@@ -102,29 +102,14 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="UI Cooldowns" parent="." instance=ExtResource("2_jf7yi")]
-offset_left = 0.0
-offset_top = 576.0
-offset_right = 336.0
-offset_bottom = 584.0
+offset_left = -1.0
+offset_top = 14.0
+offset_right = 335.0
+offset_bottom = 28.0
 theme_override_styles/background = SubResource("StyleBoxFlat_uhrri")
 theme_override_styles/fill = ExtResource("3_a2x41")
 value = 50.0
 
-[node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 4.58492, 0, 0, 0, 1, -0.279009, 0.0822551, -0.734983)
-
-[node name="RayCast3D2" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 4.58492, 0, 0, 0, 1, -0.279009, 0.0822551, 0.730705)
-
-[node name="RayCast3D3" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 4.58492, 0, 0, 0, 1, 0.287464, 0.0822551, -0.734983)
-
-[node name="RayCast3D4" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 4.58492, 0, 0, 0, 1, 0.287464, 0.0822551, 0.730705)
-
-[node name="RayCast3D5" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 4.58492, 0, 0, 0, 1, -0.000634789, 0.0822551, -0.0106583)
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1.015, 0, 0, 0, 1.015, 0, 0, 0, 1.015, 0, 0.269763, -0.0125427)
-shape = SubResource("SphereShape3D_x34x1")
+transform = Transform3D(1.015, 0, 0, 0, -4.43671e-08, -0.818641, 0, 1.015, -3.5784e-08, 0, 0.258787, -0.0346789)
+shape = SubResource("CapsuleShape3D_k5ex1")

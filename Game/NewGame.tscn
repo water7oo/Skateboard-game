@@ -113,15 +113,11 @@ polygon = PackedVector2Array(0, 0, 0.00230324, 0.0728411, 1.96646, -0.00596937, 
 transform = Transform3D(1, 0, 0, 0, 1.28759, 0, 0, 0, 0.999978, -4.8926, 0.00346607, -1.3327)
 size = Vector3(1.19, 0.121338, 1)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999989, 4.34709, 0.114631, 0.703913)
-size = Vector3(1.7251, 0.362774, 6.08264)
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
-transform = Transform3D(-2.2354e-07, -16.2178, 2.18558e-07, 0, -1.88178e-07, -1.32725, 8.53828, -1.18358e-06, 1.59504e-14, 4.27123, 0.30201, 0.696048)
-operation = 2
-radius = 0.222262
-height = 0.166441
+[node name="CSGPolygon3D5" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(-0.496054, 0, 2.00534e-07, 0, 1.49844, 0, -6.15727e-08, 0, -3.25685, 4.59112, 0.0226654, -2.50995)
+polygon = PackedVector2Array(0, 0, 0.00230324, 0.0728411, 1.96646, -0.00596937, 1, 0)
+depth = 0.27
+smooth_faces = true
 
 [node name="Ground" type="CSGCombiner3D" parent="."]
 transform = Transform3D(2.92923, 0, 0, 0, 11.035, 0, 0, 0, 1.75446, 0, -0.414, 0)
@@ -132,12 +128,6 @@ use_collision = true
 transform = Transform3D(2.9, 0, 0, 0, 1, 0, 0, 0, 3.3152, 0, -0.557433, 10)
 size = Vector3(5.2264, 1.16842, 8.78831)
 material = SubResource("StandardMaterial3D_eny7o")
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="Ground"]
-transform = Transform3D(3.84436, 0, 0, 0, 0.365255, 0, 0, 0, 6.20393, 0, 0.0778911, 6.81685)
-operation = 2
-radial_segments = 20
-rings = 8
 
 [node name="Preview" type="Control" parent="."]
 layout_mode = 3

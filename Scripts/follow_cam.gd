@@ -20,13 +20,21 @@ func _unhandled_input(event):
 		var rotation_x = spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity
 		var rotation_y = spring_arm_pivot.rotation.y - event.relative.x * mouse_sensitivity
 
-		rotation_x = clamp(rotation_x, deg_to_rad(-80), deg_to_rad(50))
+		rotation_x = clamp(rotation_x, deg_to_rad(-80), deg_to_rad(2))
+		#rotation_y = clamp(rotation_y, deg_to_rad(-90), deg_to_rad(90))
 
 		spring_arm_pivot.rotation.x = rotation_x
 		spring_arm_pivot.rotation.y = rotation_y
 		
-	
-	
+		
+	if Input.is_action_pressed("cam_down"):
+		spring_arm_pivot.rotation.x -= joystick_sensitivity 
+	if Input.is_action_pressed("cam_up"):
+		spring_arm_pivot.rotation.x += joystick_sensitivity 
+	if Input.is_action_pressed("cam_right"):
+		spring_arm_pivot.rotation.y -= joystick_sensitivity 
+	if Input.is_action_pressed("cam_left"):
+		spring_arm_pivot.rotation.y += joystick_sensitivity 
 
 
 
