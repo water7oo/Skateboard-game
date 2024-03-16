@@ -1,10 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=13 format=3 uid="uid://coisqbi6pbaig"]
 
-[ext_resource type="Texture2D" uid="uid://dx0vwoe766a8c" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="1_3bqnt"]
-[ext_resource type="PackedScene" uid="uid://d1464pyum7st3" path="res://SKATER/second_player.tscn" id="5_ddwym"]
-[ext_resource type="PackedScene" uid="uid://cde1rxt4jkci" path="res://SKATER/PlayerCamera.tscn" id="6_m03c4"]
-[ext_resource type="Shader" path="res://addons/interpolated_camera_3d/PIXELIZED.gdshader" id="7_xje6t"]
-[ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://GameStartANIM.tscn" id="13_a8nsm"]
+[ext_resource type="Texture2D" uid="uid://dx0vwoe766a8c" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="1_jx16w"]
+[ext_resource type="Shader" path="res://addons/interpolated_camera_3d/PIXELIZED.gdshader" id="2_eng4k"]
+[ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://GameStartANIM.tscn" id="3_ib7m1"]
+[ext_resource type="PackedScene" uid="uid://cde1rxt4jkci" path="res://SKATER/PlayerCamera.tscn" id="4_bt2u7"]
+[ext_resource type="PackedScene" uid="uid://dde8s7talh7vj" path="res://SKATER/Skate_Player.tscn" id="5_dhv6q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xfhkw"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -51,7 +51,7 @@ adjustment_enabled = true
 adjustment_saturation = 3.01
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hklh8"]
-albedo_texture = ExtResource("1_3bqnt")
+albedo_texture = ExtResource("1_jx16w")
 uv1_scale = Vector3(2.59, 2.59, 2.59)
 uv1_offset = Vector3(0, -0.39, 0)
 texture_filter = 0
@@ -61,7 +61,7 @@ grow_amount = -1.032
 shading_mode = 2
 diffuse_mode = 3
 specular_mode = 1
-albedo_texture = ExtResource("1_3bqnt")
+albedo_texture = ExtResource("1_jx16w")
 roughness = 0.0
 uv1_scale = Vector3(-17.09, -17.09, -17.09)
 
@@ -71,7 +71,7 @@ specular_mode = 1
 texture_filter = 0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ov31c"]
-shader = ExtResource("7_xje6t")
+shader = ExtResource("2_eng4k")
 shader_parameter/pixelSize = 2
 
 [node name="Node3D" type="Node3D"]
@@ -147,7 +147,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="Opener" parent="Preview/SubViewportContainer" instance=ExtResource("13_a8nsm")]
+[node name="Opener" parent="Preview/SubViewportContainer" instance=ExtResource("3_ib7m1")]
 visible = false
 
 [node name="SubViewport" type="SubViewport" parent="Preview/SubViewportContainer"]
@@ -156,14 +156,15 @@ canvas_item_default_texture_filter = 0
 size = Vector2i(614, 777)
 render_target_update_mode = 4
 
-[node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -0.71159, -0.185141, 8.79126)
-target = NodePath("../Second_Player/CamTarget")
-enabled = true
+[node name="Player" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("5_dhv6q")]
+transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0, 0.0528445, 0)
 
-[node name="Second_Player" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("5_ddwym")]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, -0.00391644, 2.55252)
-
-[node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player"]
-transform = Transform3D(0.2, 0, -3.49692e-08, 0, 0.2, 0, 3.49692e-08, 0, 0.2, -0.00104732, 0.258993, 0.0239048)
+[node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Player"]
+transform = Transform3D(0.519481, 0, 0, 0, 0.519481, 0, 0, 0, 0.519481, 0.0183062, 0.100253, 0.00418301)
 gizmo_extents = 4.54
+
+[node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("4_bt2u7")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -0.71159, -0.185141, 2.71379)
+target = NodePath("../Player/CamTarget")
+speed = 12.0
+enabled = true

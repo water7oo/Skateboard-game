@@ -4,17 +4,13 @@ extends CharacterBody3D
 var camera = preload("res://SKATER/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
 var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
-#@onready var dodge_node_timer = $Dodge_Cooldown
-#@onready var dodge_cooldown_label = $Dodge_Cooldown_Label
-#@onready var blend_space = $AnimationTree.get('parameters/Combat/Ground_Blend/blend_position')
-#@onready var blend_space2 = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
 @onready var Stamina_bar = $"UI Cooldowns"
 
 var current_blend_amount = 0.0
 var target_blend_amount = 0.0
 var blend_lerp_speed = 10.0  # Adjust the speed of blending
 
-
+@onready var root_node = get_tree().get_root()
 @onready var armature = $Armature
 @onready var jump_wave = get_tree().get_nodes_in_group("Jump_wave")
 @onready var dust_trail = get_tree().get_nodes_in_group("dust_trail")
@@ -119,8 +115,8 @@ var hitbox_duration = 0.2  # Adjust the duration of the hitbox here
 var is_attacking = false
 var jumping = Input.is_action_pressed("move_jump")
 var drifting = Input.is_action_pressed("move_drift")
-var camera_rotation_speed = 30
-var armature_rotation_speed = 30
+var camera_rotation_speed = 20
+var armature_rotation_speed = 20
 
 
 func _ready():
@@ -151,11 +147,11 @@ func _unhandled_input(event):
 		spring_arm_pivot.rotation.y += joystick_sensitivity 
 
 
-func rotate_player_and_camera(direction: int, delta: float) -> void:
-	var rotation_speed = armature_rotation_speed * delta * direction
-	armature.rotate(Vector3.UP, deg_to_rad(rotation_speed))
-	spring_arm_pivot.rotate(Vector3.UP, deg_to_rad(rotation_speed))
-	
+#func rotate_player_and_camera(direction: int, delta: float) -> void:
+	#var rotation_speed = armature_rotation_speed * delta * direction
+	#armature.rotate(Vector3.UP, deg_to_rad(rotation_speed))
+	#spring_arm_pivot.rotate(Vector3.UP, deg_to_rad(rotation_speed))
+	#
 func _proccess_movement(delta):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -186,20 +182,20 @@ func _proccess_movement(delta):
 
 
 
-	var target_rotation = atan2(-velocity.x, -velocity.z)
-	var turn_radius = 45
-	var angle_adjustment = atan2(turn_radius, current_speed)
-	if Input.is_action_pressed("move_left"):
-		rotate_player_and_camera(9, delta)
-	elif Input.is_action_pressed("move_right"):
-		rotate_player_and_camera(-9, delta)
-		
-	elif Input.is_action_just_pressed("move_forward"):
-		print("Player is going forwards")
-	
-	armature.rotation.y = lerp_angle(armature.rotation.y, target_rotation, LERP_VAL)
+	#var target_rotation = atan2(-velocity.x, -velocity.z)
+	#var turn_radius = 90
+	#var angle_adjustment = atan2(turn_radius, current_speed)
+	#if Input.is_action_pressed("move_left"):
+		#rotate_player_and_camera(1, delta)
+	#elif Input.is_action_pressed("move_right"):
+		#rotate_player_and_camera(-1, delta)
+		#
+	#elif Input.is_action_just_pressed("move_forward"):
+		#print("Player is going forwards")
+	#
+	#armature.rotation.y = lerp_angle(armature.rotation.y, target_rotation, LERP_VAL)
 
-	#armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
+	armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
 
 	for node in dust_trail:
 			var particle_emitter = node.get_node("Dust")
@@ -338,31 +334,31 @@ func _proccess_jump(delta):
 		if !is_on_floor() && jumping:
 			print("HEY STOP SPAMMING JUMPS")
 
-func _process_walljump(delta):
-	if is_on_wall():
-		if Input.is_action_just_pressed("move_jump"):
-			var wall_normal = get_wall_normal()
-			if wall_normal != null && wall_normal != Vector3.ZERO:
-				wall_normal = wall_normal.normalized() 
-				velocity = wall_normal * (JUMP_VELOCITY * WALL_JUMP_VELOCITY_MULTIPLIER)
-				velocity.y += WALL_JUMP_VELOCITY_MULTIPLIER
-
-				has_wall_jumped = true
-				can_wall_jump = false
-				wall_jump_position = global_transform.origin
-				if has_wall_jumped:
-					for node in wall_wave:
-							node.global_transform.origin = wall_jump_position
-							if node.has_node("AnimationPlayer"):
-								node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
+#func _process_walljump(delta):
+	#if is_on_wall():
+		#if Input.is_action_just_pressed("move_jump"):
+			#var wall_normal = get_wall_normal()
+			#if wall_normal != null && wall_normal != Vector3.ZERO:
+				#wall_normal = wall_normal.normalized() 
+				#velocity = wall_normal * (JUMP_VELOCITY * WALL_JUMP_VELOCITY_MULTIPLIER)
+				#velocity.y += WALL_JUMP_VELOCITY_MULTIPLIER
+#
+				#has_wall_jumped = true
+				#can_wall_jump = false
+				#wall_jump_position = global_transform.origin
+				#if has_wall_jumped:
+					#for node in wall_wave:
+							#node.global_transform.origin = wall_jump_position
+							#if node.has_node("AnimationPlayer"):
+								#node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
 
 func _proccess_drift(delta):
 	var drift_angle = 0
 	if Input.is_action_pressed("move_drift") && is_on_floor():
 		if Input.is_action_pressed("move_left"):
-			drift_angle = 4
+			drift_angle = 6
 		elif Input.is_action_pressed("move_right"):
-			drift_angle = -4
+			drift_angle = -6
 		armature.rotate_y(deg_to_rad(drift_angle)) 
 	else:
 		drift_angle = 0

@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d1yu2x7osdqa5" path="res://FX/jump_dust.tscn" id="4_hwfl0"]
 [ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="5_dklft"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aq1lg"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_738af"]
 diffuse_mode = 3
 specular_mode = 1
 albedo_texture_force_srgb = true
@@ -18,16 +18,16 @@ uv1_offset = Vector3(0.225, -0.2, 0)
 texture_filter = 0
 
 [sub_resource type="BoxMesh" id="BoxMesh_ufhhm"]
-material = SubResource("StandardMaterial3D_aq1lg")
+material = SubResource("StandardMaterial3D_738af")
 
 [sub_resource type="BoxMesh" id="BoxMesh_feb2k"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cdq48"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7qs7q"]
 diffuse_mode = 3
 specular_mode = 1
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_paewl"]
-material = SubResource("StandardMaterial3D_cdq48")
+material = SubResource("StandardMaterial3D_7qs7q")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uhrri"]
 bg_color = Color(0, 0, 0, 1)
@@ -41,8 +41,10 @@ script = ExtResource("1_g5dsg")
 BASE_SPEED = 2
 MAX_SPEED = 6
 BASE_ACCELERATION = 4
+metadata/_edit_pinned_properties_ = [&"BASE_SPEED"]
 
 [node name="Armature" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Board" type="MeshInstance3D" parent="Armature"]
 transform = Transform3D(0.74, 0, 0, 0, 0.061, 0, 0, 0, 1.968, 0, 0.081516, 0)
@@ -111,5 +113,5 @@ theme_override_styles/fill = ExtResource("3_a2x41")
 value = 50.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1.015, 0, 0, 0, -4.43671e-08, -0.818641, 0, 1.015, -3.5784e-08, 0, 0.258787, -0.0346789)
+transform = Transform3D(-1.015, -8.87341e-08, 3.12833e-15, 0, -4.43671e-08, -0.818641, 8.87341e-08, -1.015, 3.57839e-08, 0, 0.258787, -0.0346789)
 shape = SubResource("CapsuleShape3D_k5ex1")

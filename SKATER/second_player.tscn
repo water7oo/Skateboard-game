@@ -1,0 +1,90 @@
+[gd_scene load_steps=8 format=3 uid="uid://d1464pyum7st3"]
+
+[ext_resource type="Script" path="res://SKATER/second_player.gd" id="1_mxw71"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0pmjx"]
+friction = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aq1lg"]
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture_force_srgb = true
+roughness = 0.0
+uv1_scale = Vector3(2.36, 2.36, 2.36)
+uv1_offset = Vector3(0.225, -0.2, 0)
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_ps665"]
+material = SubResource("StandardMaterial3D_aq1lg")
+
+[sub_resource type="BoxMesh" id="BoxMesh_xwqjw"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c2plv"]
+radius = 0.439422
+height = 2.53493
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_30t08"]
+
+[node name="Second_Player" type="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00391644, 0)
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+physics_material_override = SubResource("PhysicsMaterial_0pmjx")
+angular_velocity = Vector3(0, 0.466265, 0)
+steering = 0.785398
+script = ExtResource("1_mxw71")
+
+[node name="Armature" type="Node3D" parent="."]
+transform = Transform3D(0.505, 0, 0, 0, 0.505, 0, 0, 0, 0.505, 0, 0.0867162, 0)
+
+[node name="Board" type="MeshInstance3D" parent="Armature"]
+transform = Transform3D(0.74, 0, 0, 0, 0.061, 0, 0, 0, 1.968, 0, 0.366465, 0)
+mesh = SubResource("BoxMesh_ps665")
+skeleton = NodePath("../..")
+
+[node name="FrontBackDebug" type="MeshInstance3D" parent="Armature/Board"]
+transform = Transform3D(0.303, 0, 0, 0, 3.673, 0, 0, 0, 0.114, 0, 0.90831, 0.557302)
+mesh = SubResource("BoxMesh_xwqjw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.565, 0, 0, 0, -2.46969e-08, -0.565, 0, 0.565, -2.46969e-08, 0, 0.232646, 0.0517164)
+shape = SubResource("CapsuleShape3D_c2plv")
+
+[node name="VehicleWheel3D" type="VehicleWheel3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.141367, -0.336633)
+steering = 1.5708
+use_as_traction = true
+use_as_steering = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D"]
+transform = Transform3D(1.11901e-08, 0.023, 0, -0.256, 1.00536e-09, 0, 0, 0, -0.256, 0, 0, 0)
+mesh = SubResource("CylinderMesh_30t08")
+
+[node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.143989, 0.141367, -0.336633)
+steering = 1.5708
+use_as_traction = true
+use_as_steering = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D2"]
+transform = Transform3D(1.11901e-08, 0.023, 0, -0.256, 1.00536e-09, 0, 0, 0, -0.256, 0, 0, 0)
+mesh = SubResource("CylinderMesh_30t08")
+
+[node name="VehicleWheel3D3" type="VehicleWheel3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.141301, 0.141367, 0.364799)
+use_as_traction = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D3"]
+transform = Transform3D(1.11901e-08, 0.023, 0, -0.256, 1.00536e-09, 0, 0, 0, -0.256, 0, 0, 0)
+mesh = SubResource("CylinderMesh_30t08")
+
+[node name="VehicleWheel3D4" type="VehicleWheel3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.141367, 0.364799)
+use_as_traction = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D4"]
+transform = Transform3D(1.11901e-08, 0.023, 0, -0.256, 1.00536e-09, 0, 0, 0, -0.256, 0, 0, 0)
+mesh = SubResource("CylinderMesh_30t08")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.264068, 0.0464936)
