@@ -2,6 +2,7 @@ extends Node3D
 
 @export var target: NodePath
 @export var speed := 1.0
+@export var rotation_speed := 1.0
 @export var enabled: bool
 @export var spring_arm_pivot : Node3D
 @export var mouse_sensitivity = 0.005
@@ -14,6 +15,9 @@ func _ready():
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("quit_game"):
 		get_tree().quit()
+	#if Input.is_action_just_pressed("mouse_show"):
+		#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
 
 	if event is InputEventMouseMotion:
 
@@ -38,6 +42,7 @@ func _unhandled_input(event):
 
 
 
+
 func _process(delta: float) -> void:
 	_unhandled_input(delta)
 
@@ -46,5 +51,5 @@ func _process(delta: float) -> void:
 	if not enabled or not target_node:
 		return
 
-	global_transform = global_transform.interpolate_with(
-		target_node.global_transform, speed * delta)
+	global_transform = global_transform.interpolate_with(target_node.global_transform, speed * delta)
+

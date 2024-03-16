@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=16 format=3 uid="uid://ciyscyyb72708"]
 
 [ext_resource type="Texture2D" uid="uid://dx0vwoe766a8c" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="1_3bqnt"]
+[ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="2_4bl68"]
 [ext_resource type="PackedScene" uid="uid://d1464pyum7st3" path="res://SKATER/second_player.tscn" id="5_ddwym"]
 [ext_resource type="PackedScene" uid="uid://cde1rxt4jkci" path="res://SKATER/PlayerCamera.tscn" id="6_m03c4"]
 [ext_resource type="Shader" path="res://addons/interpolated_camera_3d/PIXELIZED.gdshader" id="7_xje6t"]
@@ -12,6 +13,7 @@ sky_horizon_color = Color(1, 1, 1, 1)
 sky_curve = 0.300001
 ground_bottom_color = Color(1, 1, 1, 1)
 ground_horizon_color = Color(0.827451, 0.831373, 0.839216, 1)
+sun_curve = 0.0304594
 
 [sub_resource type="Sky" id="Sky_x3u07"]
 sky_material = SubResource("ProceduralSkyMaterial_xfhkw")
@@ -21,7 +23,7 @@ background_mode = 2
 background_energy_multiplier = 1.3
 sky = SubResource("Sky_x3u07")
 sky_rotation = Vector3(0, 5.34943, 0)
-ambient_light_color = Color(0.807843, 0.807843, 0.807843, 1)
+ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_sky_contribution = 0.0
 tonemap_exposure = 0.76
 tonemap_white = 16.0
@@ -50,7 +52,15 @@ volumetric_fog_temporal_reprojection_amount = 0.552
 adjustment_enabled = true
 adjustment_saturation = 3.01
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_togmy"]
+render_priority = 0
+shader = ExtResource("2_4bl68")
+shader_parameter/outline_color = null
+shader_parameter/outline_width = 4.0
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hklh8"]
+next_pass = SubResource("ShaderMaterial_togmy")
+shading_mode = 0
 albedo_texture = ExtResource("1_3bqnt")
 uv1_scale = Vector3(2.59, 2.59, 2.59)
 uv1_offset = Vector3(0, -0.39, 0)
@@ -58,11 +68,11 @@ texture_filter = 0
 grow_amount = -1.032
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jdeq7"]
-shading_mode = 2
+next_pass = SubResource("ShaderMaterial_togmy")
+shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("1_3bqnt")
-roughness = 0.0
 uv1_scale = Vector3(-17.09, -17.09, -17.09)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eny7o"]
@@ -72,7 +82,9 @@ texture_filter = 0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ov31c"]
 shader = ExtResource("7_xje6t")
-shader_parameter/pixelSize = 2
+shader_parameter/pixelSize = 1
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_neg2x"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -157,13 +169,27 @@ size = Vector2i(614, 777)
 render_target_update_mode = 4
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -0.71159, -0.185141, 8.79126)
+transform = Transform3D(0.44, 0, 7.69322e-08, 0, 0.44, 0, -7.69322e-08, 0, 0.44, -0.0163729, -0.040942, 3.90721)
 target = NodePath("../Second_Player/CamTarget")
+speed = 20.0
 enabled = true
 
-[node name="Second_Player" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("5_ddwym")]
+[node name="Second_Player" parent="Preview/SubViewportContainer/SubViewport" node_paths=PackedStringArray("cam_target", "cam_l", "cam_r") instance=ExtResource("5_ddwym")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, -0.00391644, 2.55252)
+cam_target = NodePath("CamTarget")
+cam_l = NodePath("Cam_l2")
+cam_r = NodePath("Cam_r2")
 
 [node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player"]
-transform = Transform3D(0.2, 0, -3.49692e-08, 0, 0.2, 0, 3.49692e-08, 0, 0.2, -0.00104732, 0.258993, 0.0239048)
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.000418311, 0.292864, 0.0239048)
 gizmo_extents = 4.54
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player/CamTarget"]
+transform = Transform3D(-4.37113e-08, -1, -1.74846e-07, 1, -4.37114e-08, 1.74846e-07, -1.74846e-07, -1.74846e-07, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_neg2x")
+
+[node name="Cam_l2" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player"]
+transform = Transform3D(0.44, 0, -2.13163e-14, 0, 0.44, 0, 2.13163e-14, 0, 0.44, -1.98409, 0.155819, 0.0283296)
+
+[node name="Cam_r2" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player"]
+transform = Transform3D(0.44, 0, -2.13163e-14, 0, 0.44, 0, 2.13163e-14, 0, 0.44, 2.37313, 0.155819, 0.00845027)

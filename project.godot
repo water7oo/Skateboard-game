@@ -14,6 +14,7 @@ config/name="Skateboarding Game"
 config/tags=PackedStringArray("3d", "thirdperson")
 run/main_scene="res://Game/NewGame.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+boot_splash/bg_color=Color(0, 0, 0, 1)
 run/scale=0.5
 run/stretch/scale=1.0
 
@@ -138,10 +139,6 @@ move_drift={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":9,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
-
-[physics]
-
-common/physics_ticks_per_second=120
 
 [rendering]
 

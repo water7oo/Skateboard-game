@@ -1,48 +1,37 @@
-[gd_scene load_steps=11 format=3 uid="uid://d1464pyum7st3"]
+[gd_scene load_steps=8 format=3 uid="uid://d1464pyum7st3"]
 
 [ext_resource type="Script" path="res://SKATER/second_player.gd" id="1_mxw71"]
-[ext_resource type="Shader" path="res://Shaders/PS1_Player_VertexWobbling.gdshader" id="2_evd4t"]
-[ext_resource type="Material" uid="uid://bvipd0cuplg0p" path="res://Shaders/gameplayer.tres" id="3_tfjpt"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0pmjx"]
-rough = true
 bounce = 0.42
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_brig0"]
-render_priority = 0
-shader = ExtResource("2_evd4t")
-shader_parameter/affine_mapping = false
-shader_parameter/alpha_scissor = 0.5
-shader_parameter/jitter = 0.5
-shader_parameter/resolution = Vector2i(320, 240)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aq1lg"]
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture_force_srgb = true
+roughness = 0.0
+uv1_scale = Vector3(2.36, 2.36, 2.36)
+uv1_offset = Vector3(0.225, -0.2, 0)
+texture_filter = 0
 
 [sub_resource type="BoxMesh" id="BoxMesh_ps665"]
-material = ExtResource("3_tfjpt")
+material = SubResource("StandardMaterial3D_aq1lg")
 
 [sub_resource type="BoxMesh" id="BoxMesh_xwqjw"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_5tjqx"]
-size = Vector3(0.692139, 1.96167, 0.501862)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ry8qu"]
-render_priority = 0
-shader = ExtResource("2_evd4t")
-shader_parameter/affine_mapping = false
-shader_parameter/alpha_scissor = 0.5
-shader_parameter/jitter = 0.552
-shader_parameter/resolution = Vector2i(320, 240)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c2plv"]
+radius = 0.439422
+height = 2.53493
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_30t08"]
 
 [node name="Second_Player" type="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00391644, 0)
 rotation_edit_mode = 1
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 mass = 7.0
 physics_material_override = SubResource("PhysicsMaterial_0pmjx")
-center_of_mass_mode = 1
-center_of_mass = Vector3(0, -10, 0)
-linear_damp = 0.7
 script = ExtResource("1_mxw71")
 
 [node name="Armature" type="Node3D" parent="."]
@@ -50,58 +39,54 @@ transform = Transform3D(0.505, 0, 0, 0, 0.505, 0, 0, 0, 0.505, 0, -0.000602404, 
 
 [node name="Board" type="MeshInstance3D" parent="Armature"]
 transform = Transform3D(0.74, 0, 0, 0, 0.061, 0, 0, 0, 1.968, 0, 0.366465, 0)
-material_override = SubResource("ShaderMaterial_brig0")
-material_overlay = ExtResource("3_tfjpt")
 mesh = SubResource("BoxMesh_ps665")
 skeleton = NodePath("../..")
 
 [node name="FrontBackDebug" type="MeshInstance3D" parent="Armature/Board"]
 transform = Transform3D(0.303, 0, 0, 0, 3.673, 0, 0, 0, 0.114, 0, 0.90831, 0.557302)
-material_override = ExtResource("3_tfjpt")
 mesh = SubResource("BoxMesh_xwqjw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.565, 0, 0, 0, -2.46969e-08, -0.565, 0, 0.565, -2.46969e-08, -0.00117249, 0.149442, 0.0323359)
-shape = SubResource("BoxShape3D_5tjqx")
+transform = Transform3D(0.565, 0, 0, 0, -2.46969e-08, -0.565, 0, 0.565, -2.46969e-08, 0, 0.256767, 0.0517164)
+shape = SubResource("CapsuleShape3D_c2plv")
 
 [node name="VehicleWheel3D" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.0806623, -0.336633)
 use_as_traction = true
 use_as_steering = true
-wheel_friction_slip = 5.0
+wheel_friction_slip = 300.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D"]
 transform = Transform3D(6.11959e-09, 0.013, 0, -0.14, 5.68248e-10, 0, 0, 0, -0.14, 0, 0, 0)
-material_override = SubResource("ShaderMaterial_ry8qu")
 mesh = SubResource("CylinderMesh_30t08")
 
 [node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.143989, 0.0806623, -0.336633)
 use_as_traction = true
 use_as_steering = true
-wheel_friction_slip = 5.0
+wheel_friction_slip = 300.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D2"]
 transform = Transform3D(6.11959e-09, 0.013, 0, -0.14, 5.68248e-10, 0, 0, 0, -0.14, 0, 0, 0)
-material_override = ExtResource("3_tfjpt")
 mesh = SubResource("CylinderMesh_30t08")
 
 [node name="VehicleWheel3D3" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.141301, 0.0806623, 0.364799)
 use_as_traction = true
-wheel_friction_slip = 5.0
+wheel_friction_slip = 300.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D3"]
 transform = Transform3D(6.11959e-09, 0.013, 0, -0.14, 5.68248e-10, 0, 0, 0, -0.14, 0, 0, 0)
-material_override = ExtResource("3_tfjpt")
 mesh = SubResource("CylinderMesh_30t08")
 
 [node name="VehicleWheel3D4" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.0806623, 0.364799)
 use_as_traction = true
-wheel_friction_slip = 5.0
+wheel_friction_slip = 300.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D4"]
 transform = Transform3D(6.11959e-09, 0.013, 0, -0.14, 5.68248e-10, 0, 0, 0, -0.14, 0, 0, 0)
-material_override = ExtResource("3_tfjpt")
 mesh = SubResource("CylinderMesh_30t08")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.264068, 0.0464936)
