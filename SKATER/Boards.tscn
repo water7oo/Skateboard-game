@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3mlpneowp3do"]
+
+[ext_resource type="PackedScene" uid="uid://er57yje5vuql" path="res://SKATER/SKATEBOARD_BOARD.fbx" id="1_ak8fn"]
+
+[node name="Root Scene" instance=ExtResource("1_ak8fn")]

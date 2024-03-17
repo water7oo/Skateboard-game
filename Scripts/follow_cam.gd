@@ -50,6 +50,7 @@ func _process(delta: float) -> void:
 
 	if not enabled or not target_node:
 		return
-
-	global_transform = global_transform.interpolate_with(target_node.global_transform, speed * delta)
-
+	
+	#global_transform = global_transform.interpolate_with(target_node.global_transform, speed * delta)
+	global_transform = target_node.global_transform
+	rotation = target_node.rotation

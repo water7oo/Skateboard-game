@@ -16,7 +16,7 @@ size = Vector2(2, 2)
 [sub_resource type="PrismMesh" id="PrismMesh_70ixb"]
 
 [node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.0591612)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0.0591612)
 script = ExtResource("1_ngwbs")
 speed = 15.0
 spring_arm_pivot = NodePath("SpringArmPivot")
@@ -47,10 +47,12 @@ skeleton = NodePath("../../../../..")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArmPivot"]
 transform = Transform3D(0.592, 0, 0, 0, 0.087, 0, 0, 0, 0.592, -0.902278, 0.185081, -0.005)
+visible = false
 mesh = SubResource("CapsuleMesh_dc6w0")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="SpringArmPivot"]
 transform = Transform3D(0.425, 0, 0, 0, 0.425, 0, 0, 0, 0.425, 1.27046, -0.0353532, -0.005)
+visible = false
 mesh = SubResource("PrismMesh_70ixb")
 skeleton = NodePath("../..")

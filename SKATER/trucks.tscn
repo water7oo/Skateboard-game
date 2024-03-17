@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://xbnylew3da63"]
+
+[ext_resource type="PackedScene" uid="uid://bpj14u6e2r1nw" path="res://SKATER/SKATEBOARD_BOARD_Trucks.fbx" id="1_0osql"]
+
+[node name="Root Scene" instance=ExtResource("1_0osql")]
