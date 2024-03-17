@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://d1464pyum7st3"]
+[gd_scene load_steps=22 format=3 uid="uid://d1464pyum7st3"]
 
 [ext_resource type="Script" path="res://SKATER/second_player.gd" id="1_mxw71"]
 [ext_resource type="Shader" path="res://Shaders/PS1_Player_VertexWobbling.gdshader" id="2_evd4t"]
@@ -6,7 +6,8 @@
 [ext_resource type="Material" uid="uid://b5c0itor70oiu" path="res://Shaders/Skateboard_Texture.tres" id="4_43gct"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0pmjx"]
-bounce = 0.3
+rough = true
+bounce = 0.69
 
 [sub_resource type="BoxMesh" id="BoxMesh_xwqjw"]
 
@@ -152,21 +153,21 @@ shader_parameter/resolution = Vector2i(320, 240)
 [sub_resource type="BoxShape3D" id="BoxShape3D_oyeuq"]
 size = Vector3(0.906799, 0.275665, 1.2406)
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wi3a3"]
+radius = 0.621684
+height = 1.54983
+
 [node name="Second_Player" type="VehicleBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.399138, 0)
-axis_lock_angular_x = true
+rotation_edit_mode = 1
 mass = 7.0
 physics_material_override = SubResource("PhysicsMaterial_0pmjx")
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, -0.08, 0)
 inertia = Vector3(0, 2, 0)
 linear_damp = 0.7
-angular_damp = 1.0
 script = ExtResource("1_mxw71")
 
 [node name="VirtuaBoard" type="Node3D" parent="."]
-transform = Transform3D(0.505, 0, 0, 0, 0.505, 0, 0, 0, 0.505, 0, 0.0133729, 0)
-visible = false
+transform = Transform3D(0.505, 0, 0, 0, 0.505, 0, 0, 0, 0.505, 0, -0.000602404, 0)
 
 [node name="FrontBackDebug" type="MeshInstance3D" parent="VirtuaBoard"]
 transform = Transform3D(0.22422, 0, 0, 0, 0.224053, 0, 0, 0, 0.224352, 0, 0.421872, -1.30242)
@@ -176,6 +177,7 @@ skeleton = NodePath("../Board")
 
 [node name="Board" type="MeshInstance3D" parent="VirtuaBoard"]
 transform = Transform3D(0.74, 0, 0, 0, 0.061, 0, 0, 0, 1.968, 0, 0.366465, 0)
+visible = false
 material_override = SubResource("ShaderMaterial_brig0")
 material_overlay = ExtResource("3_tfjpt")
 mesh = SubResource("BoxMesh_ps665")
@@ -222,7 +224,7 @@ transform = Transform3D(0.05, 0, 0, 0, 0.05, -6.66134e-16, 0, 8.88178e-16, 0.042
 target_position = Vector3(0, 0, -0.09)
 
 [node name="VehicleWheel3D" type="VehicleWheel3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.0946377, -0.336633)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.0806623, -0.336633)
 visible = false
 use_as_traction = true
 use_as_steering = true
@@ -235,7 +237,7 @@ material_overlay = ExtResource("3_tfjpt")
 mesh = SubResource("CylinderMesh_30t08")
 
 [node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.143989, 0.0946377, -0.336633)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.143989, 0.0806623, -0.336633)
 visible = false
 use_as_traction = true
 use_as_steering = true
@@ -247,7 +249,7 @@ material_override = ExtResource("3_tfjpt")
 mesh = SubResource("CylinderMesh_30t08")
 
 [node name="VehicleWheel3D3" type="VehicleWheel3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.141301, 0.0946377, 0.364799)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.141301, 0.0806623, 0.364799)
 visible = false
 use_as_traction = true
 damping_compression = 0.1
@@ -258,7 +260,7 @@ material_override = ExtResource("3_tfjpt")
 mesh = SubResource("CylinderMesh_30t08")
 
 [node name="VehicleWheel3D4" type="VehicleWheel3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.0946377, 0.364799)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.0806623, 0.364799)
 visible = false
 use_as_traction = true
 damping_compression = 0.1
@@ -270,4 +272,9 @@ mesh = SubResource("CylinderMesh_30t08")
 
 [node name="CollisionPolygon3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.441269, 0, 0, 0, 0.992525, 0, 0, 0, 0.992525, -0.00112915, 0.156985, -0.0139664)
+visible = false
 shape = SubResource("BoxShape3D_oyeuq")
+
+[node name="CollisionPolygon3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.467328, 0, 0, 0, 0.211008, 0, 0, 0, 1.17213, 0, 0.288335, -0.0100478)
+shape = SubResource("CapsuleShape3D_wi3a3")

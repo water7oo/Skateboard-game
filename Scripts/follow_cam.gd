@@ -5,7 +5,7 @@ extends Node3D
 @export var rotation_speed := 1.0
 @export var enabled: bool
 @export var spring_arm_pivot : Node3D
-@export var mouse_sensitivity = 0.005
+@export var mouse_sensitivity = 0.001
 @export var joystick_sensitivity = 0.005 
 
 func _ready():
@@ -29,7 +29,6 @@ func _unhandled_input(event):
 
 		spring_arm_pivot.rotation.x = rotation_x
 		spring_arm_pivot.rotation.y = rotation_y
-		
 		
 	if Input.is_action_pressed("cam_down"):
 		spring_arm_pivot.rotation.x -= joystick_sensitivity 

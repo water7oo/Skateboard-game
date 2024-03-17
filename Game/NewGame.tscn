@@ -20,8 +20,7 @@ sun_curve = 0.0304594
 sky_material = SubResource("ProceduralSkyMaterial_xfhkw")
 
 [sub_resource type="Environment" id="Environment_tjwux"]
-background_mode = 2
-background_energy_multiplier = 1.3
+background_energy_multiplier = 5.01
 sky = SubResource("Sky_x3u07")
 sky_rotation = Vector3(0, 5.34943, 0)
 ambient_light_color = Color(1, 1, 1, 1)
@@ -51,13 +50,12 @@ volumetric_fog_sky_affect = 0.0
 volumetric_fog_temporal_reprojection_enabled = false
 volumetric_fog_temporal_reprojection_amount = 0.552
 adjustment_enabled = true
-adjustment_saturation = 3.01
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_togmy"]
 render_priority = 0
 shader = ExtResource("2_4bl68")
 shader_parameter/outline_color = null
-shader_parameter/outline_width = 4.0
+shader_parameter/outline_width = 3.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hklh8"]
 next_pass = SubResource("ShaderMaterial_togmy")
@@ -142,6 +140,16 @@ transform = Transform3D(2.9, 0, 0, 0, 1, 0, 0, 0, 3.3152, 0, -0.305855, 10)
 size = Vector3(5.2264, 0.665265, 8.78831)
 material = SubResource("StandardMaterial3D_eny7o")
 
+[node name="CSGBox3D3" type="CSGBox3D" parent="Ground"]
+transform = Transform3D(-3.67613e-07, -1.18638e-06, -3.3152, 0, -3.3152, 9.94205e-08, -8.41, 1.5073e-13, 1.44912e-07, 12.4443, 0.364396, 9.01933)
+size = Vector3(3.99218, 0.665265, 3.01544)
+material = SubResource("StandardMaterial3D_eny7o")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Ground"]
+transform = Transform3D(2.9, 0, 0, 0, -4.37114e-08, -0.527085, 0, 6.28968, -1.44912e-07, 0.0614555, 0.665485, -4.74287)
+size = Vector3(5.31051, 0.665265, 3.01544)
+material = SubResource("StandardMaterial3D_eny7o")
+
 [node name="Preview" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
@@ -170,18 +178,19 @@ size = Vector2i(614, 777)
 render_target_update_mode = 4
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.32489)
 target = NodePath("../Second_Player/CamTarget")
 speed = 20.0
 enabled = true
 
 [node name="Second_Player" parent="Preview/SubViewportContainer/SubViewport" node_paths=PackedStringArray("cam_target", "cam_l", "cam_r") instance=ExtResource("5_ddwym")]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, -0.00391644, 2.55252)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.120071, 2.55252)
 cam_target = NodePath("CamTarget")
 cam_l = NodePath("Cam_l2")
 cam_r = NodePath("Cam_r2")
 
 [node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.000418311, 0.281279, 0.0239048)
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.000418311, 0.50847, 0.0239048)
 gizmo_extents = 4.54
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player/CamTarget"]
