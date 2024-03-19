@@ -11,11 +11,11 @@ shader_parameter/outline_width = 3.0
 
 [resource]
 next_pass = SubResource("ShaderMaterial_togmy")
+shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
 albedo_color = Color(1, 1, 1, 0)
 albedo_texture = ExtResource("1_mrppj")
-roughness = 0.0
 heightmap_scale = 4.935
 uv2_triplanar_sharpness = 0.933033
 texture_filter = 0

@@ -6,6 +6,7 @@
 [ext_resource type="Material" uid="uid://b5c0itor70oiu" path="res://Shaders/Skateboard_Texture.tres" id="4_43gct"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0pmjx"]
+friction = 0.3
 bounce = 0.3
 
 [sub_resource type="BoxMesh" id="BoxMesh_xwqjw"]
@@ -149,23 +150,23 @@ shader_parameter/resolution = Vector2i(320, 240)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_30t08"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_oyeuq"]
-size = Vector3(0.906799, 0.275665, 1.2406)
+[sub_resource type="BoxShape3D" id="BoxShape3D_hq1ax"]
+size = Vector3(1, 2.10703, 0.67881)
 
-[node name="Second_Player" type="VehicleBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.399138, 0)
+[node name="Second_Player" type="VehicleBody3D" groups=["player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.399138, 0.0325202)
 axis_lock_angular_x = true
-mass = 7.0
+mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_0pmjx")
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, -0.08, 0)
-inertia = Vector3(0, 2, 0)
+center_of_mass = Vector3(0, 0.07, 0)
 linear_damp = 0.7
 angular_damp = 1.0
 script = ExtResource("1_mxw71")
+olliePower = 50
 
 [node name="VirtuaBoard" type="Node3D" parent="."]
-transform = Transform3D(0.505, 0, 0, 0, 0.505, 0, 0, 0, 0.505, 0, 0.0133729, 0)
+transform = Transform3D(0.505, 0, 0, 0, 0.505, 0, 0, 0, 0.505, 0, 0.0270039, 0.0678683)
 visible = false
 
 [node name="FrontBackDebug" type="MeshInstance3D" parent="VirtuaBoard"]
@@ -182,7 +183,7 @@ mesh = SubResource("BoxMesh_ps665")
 skeleton = NodePath("../..")
 
 [node name="Board" type="MeshInstance3D" parent="."]
-transform = Transform3D(55, 0, 0, 0, -2.40413e-06, 55, 0, -55, -2.40413e-06, 0.000355412, 0.160871, -0.0332694)
+transform = Transform3D(55, 0, 0, 0, -2.40413e-06, 55, 0, -55, -2.40413e-06, 0.000355412, 0.174502, -0.0332694)
 material_override = ExtResource("4_43gct")
 mesh = SubResource("ArrayMesh_p0nva")
 skeleton = NodePath("")
@@ -206,7 +207,7 @@ mesh = SubResource("ArrayMesh_np1te")
 skeleton = NodePath("")
 
 [node name="Wheels_003" type="MeshInstance3D" parent="Board/Trucks"]
-transform = Transform3D(0.495378, 0, 0, 0, 0.495378, 8.85805e-08, 0, -8.85805e-08, 0.495378, -0.00168999, 0.101167, -0.0739808)
+transform = Transform3D(0.495378, 0, 0, 0, 0.495378, 8.85805e-08, 0, -8.85805e-08, 0.495378, -0.00168999, 0.0988748, -0.0739808)
 material_override = ExtResource("4_43gct")
 mesh = SubResource("ArrayMesh_np1te")
 skeleton = NodePath("")
@@ -218,15 +219,21 @@ mesh = SubResource("ArrayMesh_np1te")
 skeleton = NodePath("")
 
 [node name="RayCast3D" type="RayCast3D" parent="Board"]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, -6.66134e-16, 0, 8.88178e-16, 0.0429665, 0, -9.8953e-10, 0.000384875)
+transform = Transform3D(0.225664, 0, 0, 0, 0.308812, -5.32907e-15, 0, 9.76996e-15, 0.0968978, 0, -9.34051e-10, 0.000366025)
+target_position = Vector3(0, 0, -0.09)
+
+[node name="RepositionCast" type="RayCast3D" parent="Board"]
+transform = Transform3D(0.225664, 0, 0, 0, 0.175284, 1.43198e-08, 0, -3.06476e-08, 0.0818999, 0, -9.34051e-10, 0.000366025)
 target_position = Vector3(0, 0, -0.09)
 
 [node name="VehicleWheel3D" type="VehicleWheel3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.0946377, -0.336633)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.0870172, -0.336633)
 visible = false
-use_as_traction = true
 use_as_steering = true
-damping_compression = 0.1
+wheel_radius = 0.1
+wheel_friction_slip = 7.0
+damping_compression = 0.5
+damping_relaxation = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D"]
 transform = Transform3D(6.11959e-09, 0.013, 0, -0.14, 5.68248e-10, 0, 0, 0, -0.14, 0, 0, 0)
@@ -235,11 +242,13 @@ material_overlay = ExtResource("3_tfjpt")
 mesh = SubResource("CylinderMesh_30t08")
 
 [node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.143989, 0.0946377, -0.336633)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.143989, 0.0870172, -0.336633)
 visible = false
-use_as_traction = true
 use_as_steering = true
-damping_compression = 0.1
+wheel_radius = 0.1
+wheel_friction_slip = 7.0
+damping_compression = 0.5
+damping_relaxation = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D2"]
 transform = Transform3D(6.11959e-09, 0.013, 0, -0.14, 5.68248e-10, 0, 0, 0, -0.14, 0, 0, 0)
@@ -247,10 +256,13 @@ material_override = ExtResource("3_tfjpt")
 mesh = SubResource("CylinderMesh_30t08")
 
 [node name="VehicleWheel3D3" type="VehicleWheel3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.141301, 0.0946377, 0.364799)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.141301, 0.0870172, 0.290431)
 visible = false
 use_as_traction = true
-damping_compression = 0.1
+wheel_radius = 0.1
+wheel_friction_slip = 7.0
+damping_compression = 0.5
+damping_relaxation = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D3"]
 transform = Transform3D(6.11959e-09, 0.013, 0, -0.14, 5.68248e-10, 0, 0, 0, -0.14, 0, 0, 0)
@@ -258,16 +270,22 @@ material_override = ExtResource("3_tfjpt")
 mesh = SubResource("CylinderMesh_30t08")
 
 [node name="VehicleWheel3D4" type="VehicleWheel3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.0946377, 0.364799)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.0870172, 0.290431)
 visible = false
 use_as_traction = true
-damping_compression = 0.1
+wheel_radius = 0.1
+wheel_friction_slip = 7.0
+damping_compression = 0.5
+damping_relaxation = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D4"]
 transform = Transform3D(6.11959e-09, 0.013, 0, -0.14, 5.68248e-10, 0, 0, 0, -0.14, 0, 0, 0)
 material_override = ExtResource("3_tfjpt")
 mesh = SubResource("CylinderMesh_30t08")
 
-[node name="CollisionPolygon3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.441269, 0, 0, 0, 0.992525, 0, 0, 0, 0.992525, -0.00112915, 0.156985, -0.0139664)
-shape = SubResource("BoxShape3D_oyeuq")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.61, 0, 0, 0, -2.66639e-08, -0.61, 0, 0.61, -2.66639e-08, -0.00112915, 0.214295, -0.0330639)
+shape = SubResource("BoxShape3D_hq1ax")
+
+[node name="CenterOfMass" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0763903, -0.0325375)

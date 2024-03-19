@@ -45,7 +45,9 @@ skeleton = NodePath("../../../../..")
 
 [node name="Marker3D" type="Marker3D" parent="SpringArmPivot"]
 transform = Transform3D(0.57, 0, 0, 0, 0.57, 0, 0, 0, 0.57, 3.06328e-06, 5.53341, -20.2922)
+visible = false
 gizmo_extents = 2.75
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArmPivot/Marker3D"]
+visible = false
 mesh = SubResource("CapsuleMesh_gsb8w")

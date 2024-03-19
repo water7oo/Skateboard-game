@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=18 format=3 uid="uid://ciyscyyb72708"]
 
 [ext_resource type="Texture2D" uid="uid://dx0vwoe766a8c" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="1_3bqnt"]
 [ext_resource type="Texture2D" uid="uid://mru6yu38no5o" path="res://addons/kenney_prototype_textures/dark/texture_05.png" id="1_i2xj1"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d1464pyum7st3" path="res://SKATER/second_player.tscn" id="5_ddwym"]
 [ext_resource type="PackedScene" uid="uid://cde1rxt4jkci" path="res://SKATER/PlayerCamera.tscn" id="6_m03c4"]
 [ext_resource type="Shader" path="res://addons/interpolated_camera_3d/PIXELIZED.gdshader" id="7_xje6t"]
+[ext_resource type="PackedScene" uid="uid://cq03nu5yt1hyv" path="res://Game/railings.tscn" id="8_2q0n7"]
 [ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://GameStartANIM.tscn" id="13_a8nsm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xfhkw"]
@@ -73,6 +74,7 @@ diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("1_3bqnt")
 uv1_scale = Vector3(-17.09, -17.09, -17.09)
+texture_filter = 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eny7o"]
 diffuse_mode = 3
@@ -124,15 +126,26 @@ polygon = PackedVector2Array(0, 0, 0.00230324, 0.0728411, 1.96646, -0.00596937, 
 transform = Transform3D(1, 0, 0, 0, 1.28759, 0, 0, 0, 0.999978, -4.8926, 0.00346607, -1.3327)
 size = Vector3(1.19, 0.121338, 1)
 
-[node name="CSGPolygon3D5" type="CSGPolygon3D" parent="CSGCombiner3D"]
-transform = Transform3D(-0.496054, 0, 2.00534e-07, 0, 1.49844, 0, -6.15727e-08, 0, -3.25685, 4.59112, 0.0226654, -2.50995)
-polygon = PackedVector2Array(0, 0, 0.00230324, 0.0728411, 1.96646, -0.00596937, 1, 0)
-depth = 0.27
-smooth_faces = true
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(6.64587e-07, 0, 1.12638, 0, 0.421325, 0, -3.95974, 0, 1.18591e-07, 7.06445, 0.00989385, 6.63706)
+size = Vector3(1.39343, 0.899902, 1.06689)
+
+[node name="CSGPolygon3D6" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(4.64e-07, 0, 1.12638, 0, 3.00988, 0, -2.7646, 0, 1.1859e-07, 7.58766, 0.00331992, 3.91003)
+polygon = PackedVector2Array(0, 0, 0.021871, 0.0718108, 1.96646, -0.00596937, 1, 0)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(2.42043, 0, 0, 0, 0.642501, 0, 0, 0, 4.04113, 6.5842, -0.387644, 10.217)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(2.42043, 0, 0, 0, 0.642501, 0, 0, 0, 4.04113, 6.5842, 0.518564, 7.92012)
+operation = 2
+size = Vector3(1, 1, 2.23334)
 
 [node name="Ground" type="CSGCombiner3D" parent="."]
 transform = Transform3D(2.92923, 0, 0, 0, 11.035, 0, 0, 0, 1.75446, 0, -0.414, 0)
 material_override = SubResource("StandardMaterial3D_jdeq7")
+calculate_tangents = false
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Ground"]
@@ -149,6 +162,9 @@ material = SubResource("StandardMaterial3D_eny7o")
 transform = Transform3D(2.9, 0, 0, 0, -4.37114e-08, -0.527085, 0, 6.28968, -1.44912e-07, 0.0614555, 0.665485, -4.74287)
 size = Vector3(5.31051, 0.665265, 3.01544)
 material = SubResource("StandardMaterial3D_eny7o")
+
+[node name="Railings" parent="." instance=ExtResource("8_2q0n7")]
+transform = Transform3D(-0.953075, 0, -0.302736, 0, 1, 0, 0.302736, 0, -0.953075, 3.74714, -0.01752, 3.35146)
 
 [node name="Preview" type="Control" parent="."]
 layout_mode = 3
@@ -184,13 +200,13 @@ speed = 20.0
 enabled = true
 
 [node name="Second_Player" parent="Preview/SubViewportContainer/SubViewport" node_paths=PackedStringArray("cam_target", "cam_l", "cam_r") instance=ExtResource("5_ddwym")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.120071, 2.55252)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.15786, 2.55252)
 cam_target = NodePath("CamTarget")
 cam_l = NodePath("Cam_l2")
 cam_r = NodePath("Cam_r2")
 
 [node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.000418311, 0.50847, 0.0239048)
+transform = Transform3D(-0.2, 0, -1.74846e-08, 0, 0.2, 0, 1.74846e-08, 0, -0.2, -0.000418311, 0.50847, 0.0239048)
 gizmo_extents = 4.54
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player/CamTarget"]

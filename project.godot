@@ -144,6 +144,10 @@ move_drift={
 ]
 }
 
+[physics]
+
+jolt_3d/limits/max_linear_velocity=8.22
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
