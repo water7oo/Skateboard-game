@@ -11,6 +11,8 @@ friction = 0.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_jew4v"]
 size = Vector3(0.990295, 0.501099, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_tbled"]
+
 [sub_resource type="Curve3D" id="Curve3D_qg806"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.892472, 0.701085, 0.0137243, 0, 0, 0, 0, 0, 0, 0.911084, 0.57311, -0.0490112),
@@ -18,9 +20,7 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_tbled"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_yt2lk"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_1qlqu"]
 
 [node name="Railings" type="StaticBody3D" groups=["rail"]]
 physics_material_override = SubResource("PhysicsMaterial_8jphj")
@@ -45,34 +45,27 @@ mesh = SubResource("BoxMesh_60vua")
 transform = Transform3D(4.74531, 0, 0, 0, 0.941768, 0, 0, 0, 0.17159, -0.0134678, 0.134793, 0)
 shape = SubResource("BoxShape3D_jew4v")
 
+[node name="RailSnap1" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31103, 0.613621, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RailSnap1"]
+shape = SubResource("BoxShape3D_tbled")
+
+[node name="RailSnap2" type="Area3D" parent="."]
+transform = Transform3D(1.655, 0, 0, 0, 1.655, 0, 0, 0, 1.655, -3.44863, 0.000736177, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RailSnap2"]
+shape = SubResource("BoxShape3D_tbled")
+
 [node name="Path3D" type="Path3D" parent="."]
 transform = Transform3D(2.48282, 0, 0, 0, 0.494577, 0, 0, 0, 0.812746, 0, 0, 0)
 curve = SubResource("Curve3D_qg806")
 
-[node name="RailSnap1" type="Area3D" parent="Path3D"]
-transform = Transform3D(0.402768, 0, -3.00085e-09, 0, 2.02193, -2.35384e-10, 1.1459e-09, 0, 1.2304, 0.93081, 1.2407, 5.72948e-09)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/RailSnap1"]
-shape = SubResource("BoxShape3D_tbled")
-
-[node name="RailSnap2" type="Area3D" parent="Path3D"]
-transform = Transform3D(0.666581, 2.40068e-08, -1.20034e-08, 0, 3.34629, 0, 0, 0, 2.03631, -1.389, 0.00148844, 0)
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/RailSnap2"]
-shape = SubResource("BoxShape3D_tbled")
-
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(-0.0347615, 0.0706927, 0.996787, 0, 0.99748, -0.0707291, -0.999346, -0.00245899, -0.0346724, -0.892472, 0.701085, 0.0137243)
-use_model_front = true
-cubic_interp = false
+transform = Transform3D(0.0347615, 0.0706927, -0.996787, 0, 0.99748, 0.0707291, 0.999346, -0.00245899, 0.0346725, -0.892472, 0.701085, 0.0137243)
 loop = false
-tilt_enabled = false
 
-[node name="playerGrabber" type="MeshInstance3D" parent="Path3D/PathFollow3D"]
-transform = Transform3D(0.00516813, -0.00316355, -0.453723, -0.0106531, -0.745088, 0.000792371, -0.148529, 0.0533307, -0.0158443, -0.0143584, 0.239867, 0.0466402)
-mesh = SubResource("CapsuleMesh_yt2lk")
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Path3D/PathFollow3D"]
+transform = Transform3D(0.327348, -9.31323e-10, -3.72529e-09, 1.16415e-10, 1.64332, -8.51287e-10, 9.31323e-10, 5.44242e-09, 1, 0, 0, 0)
+mesh = SubResource("PlaneMesh_1qlqu")
 skeleton = NodePath("../../..")
-
-[connection signal="area_entered" from="Path3D/RailSnap1" to="." method="_on_rail_snap_1_area_entered"]
-[connection signal="area_entered" from="Path3D/RailSnap2" to="." method="_on_rail_snap_2_area_entered"]

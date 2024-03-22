@@ -1,11 +1,18 @@
 extends VehicleBody3D
 
+#NOTES
+#Let player have small influence when in the air
+#Fix player and camera controller orientation
+#Add grinding on rails by having player snap to the normal of the parent object of the grind rail detector
+
+
 var camera = preload("res://SKATER/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
 var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
 var playerLook = camera.get_node("SpringArmPivot/Marker3D")
 
 var rail = preload("res://Game/railings.tscn").instantiate()
+var railPlayerGrab = rail.get_node("Path3D/PathFollow3D/playerGrabber")
 var grindSnap1 = rail.get_node("RailSnap1")
 var grindSnap2 = rail.get_node("RailSnap2")
 @onready var GrindCollision = $GrindCollision
@@ -19,9 +26,10 @@ var grindSnap2 = rail.get_node("RailSnap2")
 @onready var Raycast = $Board/RayCast3D
 @onready var RepositionCast = $Board/RepositionCast
 var raycast_timer = 0.0
-@export var MAX_STEER = .4
+@export var MAX_STEER = .6
 @export var ENGINE_POWER = 45
 @export var olliePower = 40
+@export var burstForce = 90
 var jumpUses = 1 
 
 
@@ -90,7 +98,7 @@ func _proccess_movement(delta):
 	steering = rotate_toward(steering, Input.get_axis("move_right", "move_left") * MAX_STEER + (spring_arm_rotation * spring_arm_influence), delta * 1)
 	#steering = rotate_toward(steering, Input.get_axis("move_right", "move_left") * MAX_STEER, delta * 1)
 	engine_force = Input.get_axis("move_back", "move_forward") * ENGINE_POWER 
-	print("Spring Arm Rot (Degrees): " + str(spring_arm_rotation))
+	#print("Spring Arm Rot (Degrees): " + str(spring_arm_rotation))
 	
 
 func _unhandled_input(event):
@@ -140,13 +148,25 @@ func _proccess_grinding(delta):
 func _proccess_bursting(delta):
 	if Input.is_action_just_pressed("move_dodge"):
 		var forward_direction = -global_transform.basis.z
-		apply_central_impulse(forward_direction.normalized() * 90)
+		apply_central_impulse(forward_direction.normalized() * burstForce)
 		
 func _proccess_reposition(delta):
+	
+	#Flips player over depending on the normal on the ground
+	#Player cannot move until after leaving the reposition state
 	var player_flipped_over = RepositionCast.is_colliding()
 	var playerfliptimer = 0.0
 	if player_flipped_over:
-		print(playerfliptimer)
+		#print(playerfliptimer)
 		playerfliptimer += delta
-		if playerfliptimer > 0.2:
-			print("Player needs to be flipped")
+		#if playerfliptimer > 0.2:
+			##print("Player needs to be flipped")
+
+
+
+func _on_area_3d_area_entered(area):
+	if area.name == "RailSnap1":
+		railPlayerGrab.position = position 
+		print("Player collided with rail point")
+		pass
+	pass # Replace with function body.

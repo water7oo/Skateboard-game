@@ -164,7 +164,7 @@ size = Vector3(5.31051, 0.665265, 3.01544)
 material = SubResource("StandardMaterial3D_eny7o")
 
 [node name="Railings" parent="." instance=ExtResource("8_2q0n7")]
-transform = Transform3D(-0.953075, 0, -0.302736, 0, 1, 0, 0.302736, 0, -0.953075, 3.74714, -0.01752, 3.35146)
+transform = Transform3D(-0.953075, 0, -0.302736, 0, 1, 0, 0.302736, 0, -0.953075, 3.74714, -0.01752, 16.1747)
 
 [node name="Preview" type="Control" parent="."]
 layout_mode = 3
@@ -200,7 +200,7 @@ speed = 20.0
 enabled = true
 
 [node name="Second_Player" parent="Preview/SubViewportContainer/SubViewport" node_paths=PackedStringArray("cam_target", "cam_l", "cam_r") instance=ExtResource("5_ddwym")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.15786, 2.55252)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.65392, 2.55252)
 cam_target = NodePath("CamTarget")
 cam_l = NodePath("Cam_l2")
 cam_r = NodePath("Cam_r2")
