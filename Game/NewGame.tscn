@@ -163,8 +163,9 @@ transform = Transform3D(2.9, 0, 0, 0, -4.37114e-08, -0.527085, 0, 6.28968, -1.44
 size = Vector3(5.31051, 0.665265, 3.01544)
 material = SubResource("StandardMaterial3D_eny7o")
 
-[node name="Railings" parent="." instance=ExtResource("8_2q0n7")]
-transform = Transform3D(-0.953075, 0, -0.302736, 0, 1, 0, 0.302736, 0, -0.953075, 3.74714, -0.01752, 16.1747)
+[node name="Railings" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_2q0n7")]
+transform = Transform3D(-0.953075, 0, -0.302736, 0, 1, 0, 0.302736, 0, -0.953075, 3.74714, -0.01752, 5.14347)
+player = NodePath("../Preview/SubViewportContainer/SubViewport/Second_Player")
 
 [node name="Preview" type="Control" parent="."]
 layout_mode = 3
@@ -199,14 +200,11 @@ target = NodePath("../Second_Player/CamTarget")
 speed = 20.0
 enabled = true
 
-[node name="Second_Player" parent="Preview/SubViewportContainer/SubViewport" node_paths=PackedStringArray("cam_target", "cam_l", "cam_r") instance=ExtResource("5_ddwym")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.65392, 2.55252)
-cam_target = NodePath("CamTarget")
-cam_l = NodePath("Cam_l2")
-cam_r = NodePath("Cam_r2")
+[node name="Second_Player" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("5_ddwym")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.84301e-09, 0.209544, 2.52)
 
 [node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player"]
-transform = Transform3D(-0.2, 0, -1.74846e-08, 0, 0.2, 0, 1.74846e-08, 0, -0.2, -0.000418311, 0.50847, 0.0239048)
+transform = Transform3D(-0.2, 0, -1.74846e-08, 0, 0.2, 0, 1.74846e-08, 0, -0.2, -0.000418311, 0.284591, -0.00861549)
 gizmo_extents = 4.54
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player/CamTarget"]
@@ -215,7 +213,7 @@ visible = false
 mesh = SubResource("CapsuleMesh_neg2x")
 
 [node name="Cam_l2" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player"]
-transform = Transform3D(0.44, 0, -2.13163e-14, 0, 0.44, 0, 2.13163e-14, 0, 0.44, -1.98409, 0.155819, 0.0283296)
+transform = Transform3D(0.44, 0, -2.13163e-14, 0, 0.44, 0, 2.13163e-14, 0, 0.44, -1.98409, -0.0680599, -0.00419068)
 
 [node name="Cam_r2" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Second_Player"]
-transform = Transform3D(0.44, 0, -2.13163e-14, 0, 0.44, 0, 2.13163e-14, 0, 0.44, 2.37313, 0.155819, 0.00845027)
+transform = Transform3D(0.44, 0, -2.13163e-14, 0, 0.44, 0, 2.13163e-14, 0, 0.44, 2.37313, -0.0680599, -0.02407)

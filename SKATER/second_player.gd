@@ -4,7 +4,8 @@ extends VehicleBody3D
 #Let player have small influence when in the air
 #Fix player and camera controller orientation
 #Add grinding on rails by having player snap to the normal of the parent object of the grind rail detector
-
+#For grinding have the player land on the grind rail and parent to the path, the paths progress with 
+#interpolate to the other side until the player hits the exit for the rail and will be popped off/un parented
 
 var camera = preload("res://SKATER/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
@@ -30,6 +31,7 @@ var raycast_timer = 0.0
 @export var ENGINE_POWER = 45
 @export var olliePower = 40
 @export var burstForce = 90
+@export var torquePower = 1
 var jumpUses = 1 
 
 
@@ -62,19 +64,25 @@ func _process(delta: float) -> void:
 	_proccess_movement(delta)
 	_proccess_bursting(delta)
 	_proccess_reposition(delta)
+	_proccess_drifting(delta)
 
 	
-	#var Raycast_collision = Raycast.is_colliding()
-	#
-	#Fixes players orientation when upside down or when raycast timer goes off
-	#if !Raycast_collision || rotation.y == 45:
-		#raycast_timer += delta
-		#print(raycast_timer)
-		#
-		#if raycast_timer >= 3:
-			#rotation.y = Vector3.UP
-		#else:
-			#print("fix playered")
+	var Raycast_collision = Raycast.is_colliding()
+	
+	if !Raycast_collision:
+		raycast_timer += delta
+		if Input.is_action_pressed("move_right"):
+			apply_torque_impulse(Vector3(0, -torquePower, 0))
+			axis_lock_angular_x = true
+			axis_lock_angular_z = true
+		elif Input.is_action_pressed("move_left"):
+			apply_torque_impulse(Vector3(0, torquePower, 0))
+			axis_lock_angular_x = true
+			axis_lock_angular_z = true
+		else:
+			raycast_timer = 0.0
+			axis_lock_angular_x = false
+			axis_lock_angular_z = false
 
 func _proccess_movement(delta):
 	var right_input = Input.get_action_strength("move_right")
@@ -146,6 +154,7 @@ func _proccess_grinding(delta):
 	pass
 
 func _proccess_bursting(delta):
+	#Bursting can only be done if player fills trick guage 
 	if Input.is_action_just_pressed("move_dodge"):
 		var forward_direction = -global_transform.basis.z
 		apply_central_impulse(forward_direction.normalized() * burstForce)
@@ -154,19 +163,19 @@ func _proccess_reposition(delta):
 	
 	#Flips player over depending on the normal on the ground
 	#Player cannot move until after leaving the reposition state
-	var player_flipped_over = RepositionCast.is_colliding()
-	var playerfliptimer = 0.0
-	if player_flipped_over:
-		#print(playerfliptimer)
-		playerfliptimer += delta
-		#if playerfliptimer > 0.2:
-			##print("Player needs to be flipped")
-
-
+	#If players currently rotation is 180 degrees and repo raycast is colliding -> flip the player 180 degrees
+	pass
+	
+	
+func _proccess_drifting(delta):
+	#If player is going at a certain speed and is pressing the drift button -> change settings so player drifts 
+	#(make a drift state?)
+	if Input.is_action_just_pressed("move_drift"):
+		print("Drifting")
 
 func _on_area_3d_area_entered(area):
+#For grinding have the player land on the grind rail and parent to the path, the paths progress with 
+#interpolate to the other side until the player hits the exit for the rail and will be popped off/un parented
 	if area.name == "RailSnap1":
-		railPlayerGrab.position = position 
-		print("Player collided with rail point")
 		pass
 	pass # Replace with function body.

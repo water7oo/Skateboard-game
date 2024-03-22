@@ -160,8 +160,8 @@ mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_0pmjx")
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, 0.07, 0)
-inertia = Vector3(0, 10, 0)
 linear_damp = 0.7
+angular_damp = 1.0
 script = ExtResource("1_mxw71")
 MAX_STEER = 0.4
 
@@ -220,7 +220,7 @@ mesh = SubResource("ArrayMesh_np1te")
 skeleton = NodePath("")
 
 [node name="RayCast3D" type="RayCast3D" parent="Board"]
-transform = Transform3D(0.165895, 0, 0, 0, 0.216822, -9.10383e-15, 0, 3.01981e-14, 0.071618, 0, -9.10404e-10, -0.000174042)
+transform = Transform3D(0.165895, 0, 0, 0, 0.216822, -5.55112e-15, 0, 2.75335e-14, 0.0458773, 0, -9.10404e-10, -0.000174043)
 exclude_parent = false
 target_position = Vector3(0, 0, -0.09)
 
@@ -289,7 +289,7 @@ shape = SubResource("BoxShape3D_hq1ax")
 [node name="CenterOfMass" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0763903, -0.0325375)
 
-[node name="GrindBox" type="Area3D" parent="."]
+[node name="GrindBox" type="Area3D" parent="." groups=["grindBox"]]
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="GrindBox" groups=["grindBox"]]
 transform = Transform3D(0.61, 0, 0, 0, -2.66639e-08, -0.61, 0, 0.61, -2.66639e-08, -0.00112915, 0.165849, -0.0372936)
