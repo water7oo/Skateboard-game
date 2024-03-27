@@ -11,7 +11,7 @@ friction = 0.0
 [sub_resource type="BoxMesh" id="BoxMesh_60vua"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jew4v"]
-size = Vector3(0.990295, 0.501099, 1)
+size = Vector3(0.990295, 0.566101, 1)
 
 [sub_resource type="Curve3D" id="Curve3D_qg806"]
 _data = {
@@ -27,7 +27,7 @@ physics_material_override = SubResource("PhysicsMaterial_8jphj")
 script = ExtResource("1_d8qn5")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.816787, 0, 0, 0, 0.523627, 0, 0, 0, 2.47525, 2.26206, 0.821394, -0.0398337)
+transform = Transform3D(0.248, 0, 0, 0, 0.159, 0, 0, 0, 0.751, 2.26206, 0.31242, -0.0398337)
 mesh = SubResource("BoxMesh_duhfa")
 skeleton = NodePath("../Path3D/PathFollow3D")
 
@@ -47,7 +47,7 @@ material_override = ExtResource("1_jispi")
 mesh = SubResource("BoxMesh_60vua")
 
 [node name="RailCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(4.74531, 0, 0, 0, 0.941768, 0, 0, 0, 0.17159, -0.0134678, 0.134793, 0)
+transform = Transform3D(4.74531, 0, 0, 0, 0.941768, 0, 0, 0, 0.17159, -0.0134678, 0.165402, 0)
 shape = SubResource("BoxShape3D_jew4v")
 
 [node name="Path3D" type="Path3D" parent="."]
@@ -55,13 +55,13 @@ transform = Transform3D(2.48282, 0, 0, 0, 0.494577, 0, 0, 0, 0.812746, 0, 0, 0)
 curve = SubResource("Curve3D_qg806")
 
 [node name="RailSnap1" type="Area3D" parent="Path3D"]
-transform = Transform3D(0.19, 0, -1.64729e-09, 0, 0.952, 0, 5.40562e-10, 0, 0.579, 1.27786, 1.46234, 5.72948e-09)
+transform = Transform3D(0.36469, 0, -1.64729e-09, 0, 1.27565, 0, 1.03757e-09, 0, 0.579, 1.10294, 1.21145, 5.72948e-09)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/RailSnap1"]
 shape = SubResource("BoxShape3D_tbled")
 
 [node name="RailSnap2" type="Area3D" parent="Path3D"]
-transform = Transform3D(0.666581, 2.40068e-08, -1.20034e-08, 0, 3.34629, 0, 0, 0, 2.03631, -1.19994, 1.46964, 0)
+transform = Transform3D(0.270861, 0, 0, 0, 1.211, 0, 0, 0, 0.737, -1.02728, 1.22145, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/RailSnap2"]
 shape = SubResource("BoxShape3D_tbled")
@@ -75,7 +75,7 @@ loop = false
 tilt_enabled = false
 
 [node name="playerGrabber" type="RemoteTransform3D" parent="Path3D/PathFollow3D"]
-transform = Transform3D(1, 0, 7.45058e-09, 0, 1, -1.76733e-08, -3.72529e-09, -2.23372e-09, 1, 0, 1.08498, -0.0769476)
+transform = Transform3D(1, 0, 2.6077e-08, 0, 1, -9.22228e-08, -3.72529e-09, -2.23372e-09, 0.999999, 3.72529e-09, 0.058436, -0.00414431)
 remote_path = NodePath("../../../MeshInstance3D2")
 update_rotation = false
 update_scale = false

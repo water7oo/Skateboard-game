@@ -6,7 +6,7 @@
 [ext_resource type="Material" uid="uid://b5c0itor70oiu" path="res://Shaders/Skateboard_Texture.tres" id="4_43gct"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0pmjx"]
-friction = 0.3
+friction = 0.5
 rough = true
 bounce = 0.3
 
@@ -163,7 +163,7 @@ center_of_mass = Vector3(0, 0.07, 0)
 inertia = Vector3(0, 10, 0)
 linear_damp = 0.7
 script = ExtResource("1_mxw71")
-MAX_STEER = 0.4
+spring_arm_influence = 0.1
 
 [node name="VirtuaBoard" type="Node3D" parent="."]
 transform = Transform3D(0.505, 0, 0, 0, 0.505, 0, 0, 0, 0.505, 0, 0.0270039, 0.0678683)
@@ -183,14 +183,13 @@ mesh = SubResource("BoxMesh_ps665")
 skeleton = NodePath("../..")
 
 [node name="Board" type="MeshInstance3D" parent="."]
-transform = Transform3D(55, 0, 0, 0, -2.40413e-06, 55, 0, -55, -2.40413e-06, 0.000355412, 0.174502, -0.0332694)
+transform = Transform3D(55, 0, 0, 0, -2.40413e-06, 55, 0, -55, -2.40413e-06, 0.000355412, 0.106455, -0.0332694)
 material_override = ExtResource("4_43gct")
 mesh = SubResource("ArrayMesh_p0nva")
 skeleton = NodePath("")
 
 [node name="Trucks" type="MeshInstance3D" parent="Board"]
 transform = Transform3D(0.122065, 0, 0, 0, 0.122065, -2.1827e-08, 0, 2.1827e-08, 0.122065, -1.44035e-06, -3.38139e-05, -0.0017817)
-visible = false
 material_override = ExtResource("4_43gct")
 mesh = SubResource("ArrayMesh_k0mb5")
 skeleton = NodePath("")
@@ -231,6 +230,8 @@ target_position = Vector3(0, 0, -0.09)
 
 [node name="VehicleWheel3D" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.0870172, -0.336633)
+visible = false
+use_as_traction = true
 use_as_steering = true
 wheel_radius = 0.1
 damping_compression = 0.5
@@ -244,6 +245,8 @@ mesh = SubResource("CylinderMesh_30t08")
 
 [node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.143989, 0.0870172, -0.336633)
+visible = false
+use_as_traction = true
 use_as_steering = true
 wheel_radius = 0.1
 damping_compression = 0.5
@@ -256,6 +259,7 @@ mesh = SubResource("CylinderMesh_30t08")
 
 [node name="VehicleWheel3D3" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.141301, 0.0870172, 0.290431)
+visible = false
 use_as_traction = true
 wheel_radius = 0.1
 damping_compression = 0.5
@@ -268,6 +272,7 @@ mesh = SubResource("CylinderMesh_30t08")
 
 [node name="VehicleWheel3D4" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.138681, 0.0870172, 0.290431)
+visible = false
 use_as_traction = true
 wheel_radius = 0.1
 damping_compression = 0.5

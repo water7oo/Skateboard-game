@@ -14,7 +14,7 @@ size = Vector2(2, 2)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_gsb8w"]
 
 [node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.0591612)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0591612)
 script = ExtResource("1_ngwbs")
 speed = 15.0
 spring_arm_pivot = NodePath("SpringArmPivot")
@@ -44,10 +44,8 @@ mesh = SubResource("QuadMesh_n1m7q")
 skeleton = NodePath("../../../../..")
 
 [node name="Marker3D" type="Marker3D" parent="SpringArmPivot"]
-transform = Transform3D(0.57, 0, 0, 0, 0.57, 0, 0, 0, 0.57, 3.06328e-06, 5.53341, -20.2922)
-visible = false
+transform = Transform3D(0.57, 0, 0, 0, 0.57, 0, 0, 0, 0.57, 3.06328e-06, 2.0744, -1.18601)
 gizmo_extents = 2.75
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArmPivot/Marker3D"]
-visible = false
 mesh = SubResource("CapsuleMesh_gsb8w")

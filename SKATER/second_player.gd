@@ -7,6 +7,8 @@ extends VehicleBody3D
 #For grinding have the player land on the grind rail and parent to the path, the paths progress with 
 #interpolate to the other side until the player hits the exit for the rail and will be popped off/un parented
 
+# Apply rotational force when player hits push button
+
 var camera = preload("res://SKATER/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
 var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
@@ -27,11 +29,11 @@ var grindSnap2 = rail.get_node("RailSnap2")
 @onready var Raycast = $Board/RayCast3D
 @onready var RepositionCast = $Board/RepositionCast
 var raycast_timer = 0.0
-@export var MAX_STEER = .6
-@export var ENGINE_POWER = 45
+@export var MAX_STEER = .2
+@export var ENGINE_POWER = 30
 @export var olliePower = 40
 @export var burstForce = 90
-@export var torquePower = 1
+@export var torquePower = 100
 var jumpUses = 1 
 
 
@@ -71,11 +73,11 @@ func _process(delta: float) -> void:
 	
 	if !Raycast_collision:
 		raycast_timer += delta
-		if Input.is_action_pressed("move_right"):
+		if Input.is_action_just_pressed("move_right"):
 			apply_torque_impulse(Vector3(0, -torquePower, 0))
 			axis_lock_angular_x = true
 			axis_lock_angular_z = true
-		elif Input.is_action_pressed("move_left"):
+		elif Input.is_action_just_pressed("move_left"):
 			apply_torque_impulse(Vector3(0, torquePower, 0))
 			axis_lock_angular_x = true
 			axis_lock_angular_z = true
@@ -83,6 +85,16 @@ func _process(delta: float) -> void:
 			raycast_timer = 0.0
 			axis_lock_angular_x = false
 			axis_lock_angular_z = false
+			
+			
+			
+
+func _proccess_NM(delta):
+	var input_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var direction = (transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
+	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
+	apply_central_force(direction * 100)
+
 
 func _proccess_movement(delta):
 	var right_input = Input.get_action_strength("move_right")
@@ -106,8 +118,18 @@ func _proccess_movement(delta):
 	steering = rotate_toward(steering, Input.get_axis("move_right", "move_left") * MAX_STEER + (spring_arm_rotation * spring_arm_influence), delta * 1)
 	#steering = rotate_toward(steering, Input.get_axis("move_right", "move_left") * MAX_STEER, delta * 1)
 	engine_force = Input.get_axis("move_back", "move_forward") * ENGINE_POWER 
-	#print("Spring Arm Rot (Degrees): " + str(spring_arm_rotation))
+	print((spring_arm_pivot.rotation.y))
 	
+	if Input.is_action_just_pressed("move_forward"):
+		# Transform the input vector using the camera's orientation
+		var transformed_input = camera.transform.basis * Vector3(0, 0, -1)
+
+		# Calculate the target rotation based on the camera's up direction
+		var pivot_up = camera.global_transform.basis.y.normalized()
+		var target_rotation = atan2(transformed_input.x, transformed_input.z) - atan2(pivot_up.x, pivot_up.z)
+
+		# Apply the target rotation to the character's rotation
+		rotation.y = target_rotation
 
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("quit_game"):
@@ -176,6 +198,8 @@ func _proccess_drifting(delta):
 func _on_area_3d_area_entered(area):
 #For grinding have the player land on the grind rail and parent to the path, the paths progress with 
 #interpolate to the other side until the player hits the exit for the rail and will be popped off/un parented
-	if area.name == "RailSnap1":
+	
+	if area.name == "RailSnap2":
+		apply_central_impulse(Vector3(50,50,0))
 		pass
 	pass # Replace with function body.
