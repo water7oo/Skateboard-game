@@ -40,7 +40,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.175259, 0)
 script = ExtResource("1_g5dsg")
 BASE_SPEED = 2
 MAX_SPEED = 6
-BASE_ACCELERATION = 4
 metadata/_edit_pinned_properties_ = [&"BASE_SPEED"]
 
 [node name="Armature" type="Node3D" parent="."]

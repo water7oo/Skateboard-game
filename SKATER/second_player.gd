@@ -1,18 +1,9 @@
 extends VehicleBody3D
 
-#NOTES
-#Let player have small influence when in the air
-#Fix player and camera controller orientation
-#Add grinding on rails by having player snap to the normal of the parent object of the grind rail detector
-#For grinding have the player land on the grind rail and parent to the path, the paths progress with 
-#interpolate to the other side until the player hits the exit for the rail and will be popped off/un parented
-
-# Apply rotational force when player hits push button
-
 var camera = preload("res://SKATER/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
 var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
-var playerLook = camera.get_node("SpringArmPivot/Marker3D")
+var playerLook = camera.get_node("SpringArmPivot/MeshInstance3D")
 
 var rail = preload("res://Game/railings.tscn").instantiate()
 var railPlayerGrab = rail.get_node("Path3D/PathFollow3D/playerGrabber")
@@ -50,11 +41,6 @@ var jumpUses = 1
 
 var can_jump = true
 
-#NOTES
-#This code rotates the player with the spring_arm_pivots y rotation, this is improted from COWBOY.gd
-	#var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	#var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	#direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
 
 func _ready():
 	pass # Replace with function body.
@@ -87,14 +73,6 @@ func _process(delta: float) -> void:
 			axis_lock_angular_z = false
 			
 			
-			
-
-func _proccess_NM(delta):
-	var input_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	var direction = (transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
-	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
-	apply_central_force(direction * 100)
-
 
 func _proccess_movement(delta):
 	var right_input = Input.get_action_strength("move_right")
@@ -110,26 +88,16 @@ func _proccess_movement(delta):
 	if Input.is_action_pressed("cam_left"):
 		left_pivot_input += 4.0 * joystick_sensitivity
 
-	#var combined_input = ((left_input - right_input) * 2 + (left_pivot_input - right_pivot_input)/1.5) / 4.0  # Calculate the average
 	var combined_input = ((left_input + right_input))/2 # Calculate the average
 	var control_combined = ((left_pivot_input + right_input))
 	var spring_arm_rotation = (spring_arm_pivot.rotation.y)
 
 	steering = rotate_toward(steering, Input.get_axis("move_right", "move_left") * MAX_STEER + (spring_arm_rotation * spring_arm_influence), delta * 1)
-	#steering = rotate_toward(steering, Input.get_axis("move_right", "move_left") * MAX_STEER, delta * 1)
 	engine_force = Input.get_axis("move_back", "move_forward") * ENGINE_POWER 
 	print((spring_arm_pivot.rotation.y))
 	
 	if Input.is_action_just_pressed("move_forward"):
-		# Transform the input vector using the camera's orientation
-		var transformed_input = camera.transform.basis * Vector3(0, 0, -1)
-
-		# Calculate the target rotation based on the camera's up direction
-		var pivot_up = camera.global_transform.basis.y.normalized()
-		var target_rotation = atan2(transformed_input.x, transformed_input.z) - atan2(pivot_up.x, pivot_up.z)
-
-		# Apply the target rotation to the character's rotation
-		rotation.y = target_rotation
+		var spring_forward = -spring_arm_pivot.global_transform.basis.z
 
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("quit_game"):
@@ -168,11 +136,7 @@ func _proccess_jump(delta):
 
 
 func _proccess_grinding(delta):
-	#var GrindCollision_collision = GrindCollision.is_colliding()
-	#if GrindCollision_collision:
-		#var colliding_object = GrindCollision.get_collider()
-		#if colliding_object && colliding_object.name == "RailSnap1":
-			#print("WORKING")
+#might add effects with this function 
 	pass
 
 func _proccess_bursting(delta):

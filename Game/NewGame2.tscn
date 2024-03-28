@@ -158,6 +158,7 @@ render_target_update_mode = 4
 
 [node name="Player" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("5_dhv6q")]
 transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0, 0.0528445, 0)
+BASE_ACCELERATION = 5
 
 [node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Player"]
 transform = Transform3D(0.519481, 0, 0, 0, 0.519481, 0, 0, 0, 0.519481, 0.0183062, 0.100253, 0.00418301)

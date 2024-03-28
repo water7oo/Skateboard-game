@@ -7,12 +7,12 @@ var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
 @onready var armature = $Armature
 @export var mouse_sensitivity = 0.005
 @export var joystick_sensitivity = 0.1
-@export var baseSpeed = 1
-@export var maxSpeed = 3
+@export var baseSpeed = 20
+@export var maxSpeed = 50
 @export var angularAcceleration = 25
 @export var jumpPower = 10
 @export var custom_gravity = 25
-@export var rotationSpeed = 50
+@export var rotationSpeed = 5
 @export var turnAngle = 45
 var is_moving = false
 
