@@ -143,6 +143,7 @@ func _proccess_bursting(delta):
 	#Bursting can only be done if player fills trick guage 
 	if Input.is_action_just_pressed("move_dodge"):
 		var forward_direction = -global_transform.basis.z
+		hit_stop(0.5, 1.5)
 		apply_central_impulse(forward_direction.normalized() * burstForce)
 		
 func _proccess_reposition(delta):
@@ -158,6 +159,14 @@ func _proccess_drifting(delta):
 	#(make a drift state?)
 	if Input.is_action_just_pressed("move_drift"):
 		print("Drifting")
+
+
+func hit_stop(timeScale, duration):
+		Engine.time_scale = timeScale
+		var timer = get_tree().create_timer(timeScale * duration)
+		await timer.timeout
+		Engine.time_scale = 1
+		
 
 func _on_area_3d_area_entered(area):
 #For grinding have the player land on the grind rail and parent to the path, the paths progress with 

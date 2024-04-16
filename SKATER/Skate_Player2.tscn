@@ -46,7 +46,6 @@ axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_toart")
 script = ExtResource("1_anv1o")
 speed = 20.0
-turn_speed = 100.0
 
 [node name="Armature" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
